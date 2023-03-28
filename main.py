@@ -1,6 +1,7 @@
 import cv2
 import webbrowser
 import time
+import os
 
 rtsp_address = "rtsp://username:password@IP_address:port/stream"
 
@@ -10,6 +11,7 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
+filepath = rf"C:\Users\{os.getlogin()}\AppData\Local\Microsoft\WindowsApps\wt.exe"
 
 motion_detected = False
 motion_delay = 10
@@ -53,6 +55,7 @@ while True:
         webbrowser.open('http://example.com')
         motion_detected = False
         prev_motion_time = time.time()
+        os.startfile(filepath)
 
     if cv2.waitKey(1) == ord('q'):
         break
