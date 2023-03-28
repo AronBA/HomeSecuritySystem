@@ -1,5 +1,6 @@
 import cv2
 import webbrowser
+import time
 
 rtsp_address = "rtsp://username:password@IP_address:port/stream"
 
@@ -11,6 +12,8 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 
 motion_detected = False
+motion_delay = 10
+prev_motion_time = 0
 motion_counter = 0
 motion_threshold = 10000
 last_motion_time = 0
@@ -46,10 +49,10 @@ while True:
         motion_counter = 0
 
 
-    if motion_detected:
+    if motion_detected and time.time() > prev_motion_time + motion_delay:
         webbrowser.open('http://example.com')
         motion_detected = False
-
+        prev_motion_time = time.time()
 
     if cv2.waitKey(1) == ord('q'):
         break
