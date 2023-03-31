@@ -54,16 +54,16 @@ sendEmailLabel = tk.Label(contentFrame, text="Send Email")
 sendEmail = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=emailState, command=lambda: showEmail(emailState.get()))
 
 # Content for Email Frame
-emailAdressLabel = tk.Label(emailFrame, text="Email Address")
-emailAdress = tk.Entry(emailFrame)
+emailAddressLabel = tk.Label(emailFrame, text="Email Address")
+emailAddress = tk.Entry(emailFrame)
 emailSubjectLabel = tk.Label(emailFrame, text="Email Subject")
 emailSubject = tk.Entry(emailFrame)
 emailContentLabel = tk.Label(emailFrame, text="Email Content")
 emailContent = tk.Text(emailFrame, height=5, width=15)
 
 # Add the items to the Frame
-contentItems = [[rtpsLabel,rtps],[programLabel,program],[websiteLabel,website],[delayLabel,delay],[sendEmailLabel, sendEmail]]
-emailItems = [[emailAdressLabel,emailAdress],[emailSubjectLabel, emailSubject],[emailContentLabel,emailContent]]
+contentItems = [[rtpsLabel, rtps], [programLabel, program], [websiteLabel, website], [delayLabel, delay], [sendEmailLabel, sendEmail]]
+emailItems = [[emailAddressLabel, emailAddress], [emailSubjectLabel, emailSubject], [emailContentLabel, emailContent]]
 addInputs(contentItems)
 addInputs(emailItems)
 
