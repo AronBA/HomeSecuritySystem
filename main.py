@@ -3,17 +3,24 @@ import webbrowser
 import time
 import os
 from configparser import ConfigParser
+import numpy as np
+
+from playsound import playsound
 
 config = ConfigParser()
 
 config.read("settings.ini")
 
-print(config.get("DEFAULT","program"))
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("rtsp://admin:admin@192.168.1.96:554")
 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+cap2 = cv2.VideoCapture("rtsp://admin:admin@192.168.1.92:554")
+
+cap2.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap2.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 filepath = ""
 motion_detected = False
@@ -21,10 +28,12 @@ motion_delay = 10
 motion_counter = 0
 motion_threshold = 10000
 last_motion_time = 0
+prev_motion_time = 0
 
 while True:
     ret, frame = cap.read()
-    cv2.imshow('Camera Feed', frame)
+    ret, frame2 = cap2.read()
+    cv2.imshow('Camera Feed', np.concatenate((frame2,frame), 1))
 
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame = cv2.GaussianBlur(gray_frame, (21, 21), 0)
@@ -49,11 +58,13 @@ while True:
         motion_counter = 0
 
     if motion_detected and time.time() > prev_motion_time + motion_delay:
-        webbrowser.open(""
-                        )
+        webbrowser.open("https://youtube.com")
         motion_detected = False
         prev_motion_time = time.time()
-        os.startfile(filepath)
+
+        playsound("sound.mp3")
+
+        #os.startfile(filepath)
 
     if cv2.waitKey(1) == ord('q'):
         break
