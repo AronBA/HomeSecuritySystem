@@ -1,19 +1,21 @@
 import smtplib
 
-mainEmail = 'C.A.S@HomeAlertSystem.com'
-client = ['klemenzmahar@gmail.com']
+mainSender = 'C.A.S@HomeAlertSystem.com'
+mainReceivers = ['klemenzmahar@gmail.com']
+mainMsg = "movement detected"
+camera = "#1"
+mainSubject = "Motion Detected"
 
-camera = '#1'
 
-
-def sendemail(cameraNumber: int, receiver: [str], sender: str):
+def sendemail(cameraNumber: int, receiver: [str], sender: str, msg: str, subject: str):
     receivers = ""
     for rec in receiver:
         receivers += ", " + rec
     message = f"""From: C.A.S <{sender}>
     To: {receivers}
-    Subject: Motion Detected
-
+    Subject: {subject}
+    
+    {msg}
     There was motion detected by camera #{cameraNumber}
     """
     try:
@@ -24,4 +26,4 @@ def sendemail(cameraNumber: int, receiver: [str], sender: str):
         print(error)
 
 
-sendemail(1, client, mainEmail)
+sendemail(1, mainReceivers, mainSender, mainMsg, mainSubject)
