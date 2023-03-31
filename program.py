@@ -25,29 +25,36 @@ root.resizable(False, False)
 root.geometry("600x400")
 root.eval('tk::PlaceWindow . center')
 
-l = tk.Label(text="RTPS")
-url = tk.Entry(root, text="sex")
+contentPanel = tk.PanedWindow()
+emailPanel = tk.PanedWindow()
 
-l2 = tk.Label(text="delay")
-dealay2 = tk.Entry(root)
+rtpsLabel = tk.Label(text="RTPS")
+rtps = tk.Entry(root)
 
-l3 = tk.Label(text="programm")
-programm = tk.Entry(root)
+programLabel = tk.Label(text="Programm")
+program = tk.Entry(root)
 
-l4 = tk.Label(text="website")
+websiteLabel = tk.Label(text="website")
 website = tk.Entry(root)
 
-b = tk.Button(text="save&restart", command=lambda: save(dealay2.get(), url.get(), programm.get(), website.get()))
+delayLabel = tk.Label(text="delay")
+delay = tk.Entry(root)
 
-l.pack()
-url.pack()
-l2.pack()
-dealay2.pack()
-l3.pack()
-programm.pack()
-l4.pack()
-website.pack()
+emailAdressLabel = tk.Label(text="Email Adresse")
+emailAdress = tk.Entry(root)
 
-b.pack()
+b = tk.Button(text="save&restart", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get()))
+
+contentPanel.add(rtpsLabel)
+contentPanel.add(rtps)
+contentPanel.add(programLabel)
+contentPanel.add(program)
+
+emailPanel.add(emailAdressLabel)
+emailPanel.add(emailAdress)
+
+contentPanel.pack(side="left")
+emailPanel.pack(side="right")
+b.pack(side="bottom")
 
 root.mainloop()
