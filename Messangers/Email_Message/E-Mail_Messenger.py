@@ -1,23 +1,27 @@
 import smtplib
 
-sender = 'C.A.S@HomeAlerts.com'
-client = ['yourEmailAdresses']
+mainEmail = 'C.A.S@HomeAlertSystem.com'
+client = ['klemenzmahar@gmail.com']
 
 camera = '#1'
 
 
-def sendemail(cameraNumber: int, receiver: str):
+def sendemail(cameraNumber: int, receiver: [str], sender: str):
+    receivers = ""
+    for rec in receiver:
+        receivers += ", " + rec
     message = f"""From: C.A.S <{sender}>
-    To: {receiver}
+    To: {receivers}
     Subject: Motion Detected
 
     There was motion detected by camera #{cameraNumber}
     """
     try:
-        smtpObj = smtplib.SMTP('localhost')
-        smtpObj.sendmail(sender, receiver, message)
-        print('Success')
-    except smtplib.SMTPException:
-        print('Email not sent')
+        smtpobj = smtplib.SMTP('localhost')
+        smtpobj.sendmail(sender, receiver, message)
+        print('Email Sent')
+    except smtplib.SMTPException or smtplib.SMTPResponseException or smtplib.SMTPRecipientsRefused or smtplib.SMTPSenderRefused or smtplib.SMTPHeloError as error:
+        print(error)
 
-sendemail(1, 'klemenzmahar@gmail.com')
+
+sendemail(1, client, mainEmail)
