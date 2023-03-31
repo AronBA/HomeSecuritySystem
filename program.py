@@ -16,12 +16,12 @@ def save(Delay="", RTSP="", Website="", Program=""):
 
 def addInputs(items):
     for idx, item in enumerate(items):
-        item[0].grid(row=idx, column=0, pady=5)
-        item[1].grid(row=idx, column=1, pady=5)
+        item[0].grid(row=idx, column=0, pady=5, padx=5, sticky="W")
+        item[1].grid(row=idx, column=1, pady=5, padx=5, sticky="W")
 
 def showEmail(state):
     if state:
-        emailFrame.grid(row=0, column=1)
+        emailFrame.grid(row=0, column=1, padx=25)
     else:
         emailFrame.grid_remove()
 
@@ -34,26 +34,27 @@ root.eval('tk::PlaceWindow . center')
 
 frame = tk.Frame(root)
 frame.pack()
-contentFrame = tk.LabelFrame(frame, text="Einstellungen")
-contentFrame.grid(row=0, column=0)
+contentFrame = tk.LabelFrame(frame, text="Settings")
+contentFrame.grid(row=0, column=0, padx=25)
 
 emailFrame = tk.LabelFrame(frame, text="Email")
-emailFrame.grid(row=0, column=1)
+emailFrame.grid_remove()
 
 # Content for Content Frame
 rtpsLabel = tk.Label(contentFrame, text="RTPS")
 rtps = tk.Entry(contentFrame)
-programLabel = tk.Label(contentFrame, text="Programm")
+programLabel = tk.Label(contentFrame, text="Program")
 program = tk.Entry(contentFrame)
 websiteLabel = tk.Label(contentFrame, text="Website")
 website = tk.Entry(contentFrame)
 delayLabel = tk.Label(contentFrame, text="Delay")
 delay = tk.Entry(contentFrame)
-sendEmailLabel = tk.Label(contentFrame, text="Delay")
-sendEmail = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0)
+emailState = tk.BooleanVar()
+sendEmailLabel = tk.Label(contentFrame, text="Send Email")
+sendEmail = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=emailState, command=lambda: showEmail(emailState.get()))
 
 # Content for Email Frame
-emailAdressLabel = tk.Label(emailFrame, text="Email Adresse")
+emailAdressLabel = tk.Label(emailFrame, text="Email Address")
 emailAdress = tk.Entry(emailFrame)
 emailSubjectLabel = tk.Label(emailFrame, text="Email Subject")
 emailSubject = tk.Entry(emailFrame)
@@ -66,8 +67,7 @@ emailItems = [[emailAdressLabel,emailAdress],[emailSubjectLabel, emailSubject],[
 addInputs(contentItems)
 addInputs(emailItems)
 
-
 saveButton = tk.Button(text="save&restart", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get()))
-
+saveButton.pack()
 
 root.mainloop()
