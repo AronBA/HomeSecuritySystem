@@ -10,8 +10,10 @@ camera = "#1"
 
 
 def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str):
-    text = f"""{msg}
-There was motion detected by camera #{cameraNumber}"""
+    text = f"""*******************************************
+There was motion detected by camera #{cameraNumber}
+*******************************************
+{msg}"""
     em = EmailMessage()
     em['from'] = sender
     em['To'] = receiver
