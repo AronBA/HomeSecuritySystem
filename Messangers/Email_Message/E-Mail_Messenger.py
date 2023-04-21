@@ -1,29 +1,28 @@
+from email.message import EmailMessage
+import ssl
 import smtplib
 
-mainSender = 'C.A.S@HomeAlertSystem.com'
-mainReceivers = ['klemenzmahar@gmail.com']
+password = ''
+mainSender = 'Modul0426@gmail.com'
+mainReceiver = 'bojan.rodic@stud.edubs.ch'
 mainMsg = "movement detected"
 camera = "#1"
-mainSubject = "Motion Detected"
 
 
-def sendemail(cameraNumber: int, receiver: [str], sender: str, msg: str, subject: str):
-    receivers = ""
-    for rec in receiver:
-        receivers += ", " + rec
-    message = f"""From: C.A.S <{sender}>
-    To: {receivers}
-    Subject: {subject}
-    
-    {msg}
-    There was motion detected by camera #{cameraNumber}
-    """
-    try:
-        smtpobj = smtplib.SMTP('localhost')
-        smtpobj.sendmail(sender, receiver, message)
-        print('Email Sent')
-    except smtplib.SMTPException or smtplib.SMTPResponseException or smtplib.SMTPRecipientsRefused or smtplib.SMTPSenderRefused or smtplib.SMTPHeloError as error:
-        print(error)
+def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str):
+    text = f"""{msg}
+There was motion detected by camera #{cameraNumber}"""
+    em = EmailMessage()
+    em['from'] = sender
+    em['To'] = receiver
+    em['Subject'] = subject
+    em.set_content(text)
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(sender, password)
+        smtp.sendmail(sender,receiver, em.as_string())
 
 
-sendemail(1, mainReceivers, mainSender, mainMsg, mainSubject)
+sendemail(1, mainReceiver, mainSender, mainMsg, "Motion detected by security system")

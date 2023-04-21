@@ -1,6 +1,6 @@
 import vonage
 
-client = vonage.Client(key="dc138114", secret="2tXlg3xiJTScZP50")
+client = vonage.Client(key="", secret="")
 sms = vonage.Sms(client=client)
 
 
@@ -10,7 +10,9 @@ def sendSMS(recipient, cameraNum: int, msg):
             "from": "C.A.S",
             "to": recipient,
             "text": f"""
-*Motion detected by Camera #{cameraNum}*
+**************************************
+Motion detected by Camera #{cameraNum}
+**************************************
 {msg}
 """,
         }
@@ -23,4 +25,4 @@ def sendSMS(recipient, cameraNum: int, msg):
         print(f"Message failed with error: {response['messages'][0]['error-text']}")
 
 
-sendSMS("+41779611539", 1, "hi")
+sendSMS("+41779611539", 2, "hi")
