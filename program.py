@@ -106,9 +106,9 @@ addInputs(emailItems)
 addInputs(messengerItems)
 
 saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get(),
-                                                         emailState, emailAddress.get(), emailSubject.get(),
+                                                         emailState.get(), emailAddress.get(), emailSubject.get(),
                                                          emailContent.get(1.0, "end-1c"),
-                                                         messengerState, messengerNumber.get(),
+                                                         messengerState.get(), messengerNumber.get(),
                                                          messengerContent.get(1.0, "end-1c")))
 saveButton.pack()
 
