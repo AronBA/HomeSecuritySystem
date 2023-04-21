@@ -10,9 +10,9 @@ def sendSMS(recipient, cameraNum: int, msg):
             "from": "C.A.S",
             "to": recipient,
             "text": f"""
-**************************************
+********************************
 Motion detected by Camera #{cameraNum}
-**************************************
+********************************
 {msg}
 """,
         }
