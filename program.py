@@ -5,11 +5,20 @@ import os
 config = ConfigParser()
 
 
-def save(Delay="", RTSP="", Website="", Program=""):
+def save(Delay="", RTSP="", Website="", Program="",
+         EmailState=False, EmailAdress="", EmailSubject="", EmailContent="",
+         MessengerState=False, MessengerNumber="", MessengerContent=""):
     config.set("DEFAULT", "Delay", Delay)
     config.set("DEFAULT", "RTSP", RTSP)
     config.set("DEFAULT", "Program", Program)
     config.set("DEFAULT", "Website", Website)
+    config.set("DEFAULT", "EmailState", f"{EmailState}")
+    config.set("DEFAULT", "EmailAddress", EmailAdress)
+    config.set("DEFAULT", "EmailSubject", EmailSubject)
+    config.set("DEFAULT", "EmailContent", EmailContent)
+    config.set("DEFAULT", "MessengerState", f"{MessengerState}")
+    config.set("DEFAULT", "MessengerNumber", MessengerNumber)
+    config.set("DEFAULT", "MessengerContent", MessengerContent)
     with open('settings.ini', 'w') as f:
         config.write(f)
 
@@ -64,13 +73,13 @@ website = tk.Entry(contentFrame)
 delayLabel = tk.Label(contentFrame, text="Delay")
 delay = tk.Entry(contentFrame)
 emailState = tk.BooleanVar()
-messageState = tk.BooleanVar()
+messengerState = tk.BooleanVar()
 sendEmailLabel = tk.Label(contentFrame, text="Send Email")
 sendEmail = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=emailState,
                            command=lambda: showEmail(emailState.get()))
 sendMessengerLabel = tk.Label(contentFrame, text="Send Message")
-sendMessenger = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=messageState,
-                               command=lambda: showMessenger(messageState.get()))
+sendMessenger = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=messengerState,
+                               command=lambda: showMessenger(messengerState.get()))
 
 
 # Content for Email Frame
@@ -84,21 +93,23 @@ emailContent = tk.Text(emailFrame, height=5, width=15)
 # Content for Messenger Frame
 messengerNumberLabel = tk.Label(messengerFrame, text="Tel. Number")
 messengerNumber = tk.Entry(messengerFrame)
-messengerTextLabel = tk.Label(messengerFrame, text="Messenger Text")
-messengerText = tk.Text(messengerFrame, height=5, width=15)
+messengerContentLabel = tk.Label(messengerFrame, text="Messenger Text")
+messengerContent = tk.Text(messengerFrame, height=5, width=15)
 
 # Add the items to the Frame
 contentItems = [[rtpsLabel, rtps], [programLabel, program], [websiteLabel, website], [delayLabel, delay],
                 [sendEmailLabel, sendEmail], [sendMessengerLabel, sendMessenger]]
 emailItems = [[emailAddressLabel, emailAddress], [emailSubjectLabel, emailSubject], [emailContentLabel, emailContent]]
-messengerItems = [[messengerNumberLabel, messengerNumber], [messengerTextLabel, messengerText]]
+messengerItems = [[messengerNumberLabel, messengerNumber], [messengerContentLabel, messengerContent]]
 addInputs(contentItems)
 addInputs(emailItems)
 addInputs(messengerItems)
 
-saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get()))
+saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get(),
+                                                         emailState, emailAddress.get(), emailSubject.get(),
+                                                         emailContent.get(1.0, "end-1c"),
+                                                         messengerState, messengerNumber.get(),
+                                                         messengerContent.get(1.0, "end-1c")))
 saveButton.pack()
 
 root.mainloop()
-
-# Mes. Bigger input field, Delay einheit, Definitions
