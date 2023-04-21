@@ -12,14 +12,11 @@ import Messangers.SMS_Message as sms
 import Messangers.Email_Message as email
 import logging
 
-# ---------
-# variables
-# ---------
-
-# important for development environment
+# ------------------------important for development environment------------------------------------
 env_debug = True  # True = debug information in console
 env_local = True  # True = your own camera gets used and not those in the network
 env_production = False  # True = you will actually send sms and email (this costs money)
+# -------------------------------------------------------------------------------------------------
 
 relais_on = False
 relais_on_duration = 5
@@ -42,14 +39,37 @@ url_camera_1 = "rtsp://admin:admin@192.168.1.96:554"
 url_camera_2 = "rtsp://admin:admin@192.168.1.92:554"
 
 
-# ---------
-# functions
-# ---------
-
 def play_sound():
     if not env_local:
         playsound(sound=path_sound)
     logging.debug('Played Sound')
+
+
+def print_debug():
+    logging.debug(f'''
+    ----------------------------------
+    |          Variables              |
+    ----------------------------------
+    env_debug: {env_debug}
+    env_local: {env_local} 
+    env_production: {env_production} 
+    relais_on: {relais_on} 
+    relais_on_duration: {relais_on_duration} seconds
+    path_executable: {path_executable} 
+    path_sound: {path_sound} 
+    motion_detected: {motion_detected} 
+    motion_detection_cooldown: {motion_detection_cooldown}
+    motion_frame_counter: {motion_frame_counter} 
+    motion_detection_threshold: {motion_detection_threshold} 
+    motion_last_time: {motion_last_time} 
+    motion_previous_time: {motion_previous_time} 
+    url_relais_on: {url_relais_on}
+    url_relais_off: {url_relais_off}
+    url_open_website: {url_open_website}
+    url_camera_1: {url_camera_1}
+    url_camera_2: {url_camera_2}
+    ----------------------------------
+    ''')
 
 
 def play_relais():
@@ -90,36 +110,10 @@ else:
     cap2.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 logging.info("Program starting..")
-logging.debug(f'''
-----------------------------------
-|          Variables              |
-----------------------------------
-env_debug: {env_debug}
-env_local: {env_local} 
-env_production: {env_production} 
-relais_on: {relais_on} 
-relais_on_duration: {relais_on_duration} seconds
-path_executable: {path_executable} 
-path_sound: {path_sound} 
-motion_detected: {motion_detected} 
-motion_detection_cooldown: {motion_detection_cooldown}
-motion_frame_counter: {motion_frame_counter} 
-motion_detection_threshold: {motion_detection_threshold} 
-motion_last_time: {motion_last_time} 
-motion_previous_time: {motion_previous_time} 
-url_relais_on: {url_relais_on}
-url_relais_off: {url_relais_off}
-url_open_website: {url_open_website}
-url_camera_1: {url_camera_1}
-url_camera_2: {url_camera_2}
-----------------------------------
-''')
+
+print_debug()
 
 logging.info("Program running...")
-
-# ---------
-# main loop
-# ---------
 
 while True:
     motion_detected = False
@@ -154,7 +148,7 @@ while True:
 
         for contour in contours:
             if cv2.contourArea(contour) < motion_detection_threshold:
-                # logging.debug('Detected Motion') #only use for crazy debugging
+                #logging.debug('Detected Motion') #only use for crazy debugging
                 continue
             motion_detected = True
 
@@ -183,10 +177,6 @@ while True:
         break
 
     motion_frame_counter += 1
-
-# ---------
-# cleanup
-# ---------
 
 logging.info("Program shutdown...")
 cap.release()
