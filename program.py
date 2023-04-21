@@ -85,7 +85,7 @@ emailContent = tk.Text(emailFrame, height=5, width=15)
 messengerNumberLabel = tk.Label(messengerFrame, text="Tel. Number")
 messengerNumber = tk.Entry(messengerFrame)
 messengerTextLabel = tk.Label(messengerFrame, text="Messenger Text")
-messengerText = tk.Entry(messengerFrame)
+messengerText = tk.Text(messengerFrame, height=5, width=15)
 
 # Add the items to the Frame
 contentItems = [[rtpsLabel, rtps], [programLabel, program], [websiteLabel, website], [delayLabel, delay],
@@ -96,7 +96,7 @@ addInputs(contentItems)
 addInputs(emailItems)
 addInputs(messengerItems)
 
-saveButton = tk.Button(text="save&restart", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get()))
+saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get()))
 saveButton.pack()
 
 root.mainloop()
