@@ -23,7 +23,7 @@ relais_on_duration = 5
 config = ConfigParser()
 
 path_executable = ""
-path_sound = "sound.mp3"
+path_sound = "../Files/sound.mp3"
 
 motion_detected = False
 motion_detection_cooldown = 5
@@ -86,7 +86,7 @@ def play_relais():
 if env_debug:
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 else:
-    logging.basicConfig(filename='app.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s',
+    logging.basicConfig(filename='../Files/app.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 if env_local:
 
