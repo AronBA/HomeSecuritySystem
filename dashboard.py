@@ -1,9 +1,10 @@
 import tkinter as tk
 from configparser import ConfigParser
 import os
+import subprocess
 
 config = ConfigParser()
-
+process = None
 
 def save(Delay="", RTSP="", Website="", Program="",
          EmailState=False, EmailAdress="", EmailSubject="", EmailContent="",
@@ -19,10 +20,23 @@ def save(Delay="", RTSP="", Website="", Program="",
     config.set("DEFAULT", "MessengerState", f"{MessengerState}")
     config.set("DEFAULT", "MessengerNumber", MessengerNumber)
     config.set("DEFAULT", "MessengerContent", MessengerContent)
-    with open('settings.ini', 'w') as f:
+    with open('Files/settings.ini', 'w') as f:
         config.write(f)
 
-    os.system("main.py")
+
+def run():
+    arg = ["/home/aron/PycharmProjects/Modularbeit426/Motiondetection/motiondetection.py"]
+    path = "/usr/bin/python3"
+    global process
+    process=subprocess.Popen([path] + arg)
+
+
+
+
+def stop(process):
+    if process is not None:
+        process.terminate()
+
 
 
 def addInputs(items):
@@ -110,6 +124,11 @@ saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get()
                                                          emailContent.get(1.0, "end-1c"),
                                                          messengerState.get(), messengerNumber.get(),
                                                          messengerContent.get(1.0, "end-1c")))
+runButton = tk.Button(text="run",command=run)
+stopbutton = tk.Button(text="stop",command=lambda: stop(process))
+
+stopbutton.pack()
+runButton.pack()
 saveButton.pack()
 
 root.mainloop()
