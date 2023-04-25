@@ -38,18 +38,18 @@ def showEmail(state):
         emailFrame.grid_remove()
 
 
-def showMessenger(state):
+def showSms(state):
     if state:
-        messengerFrame.grid(row=1, column=0, padx=25)
+        smsFrame.grid(row=1, column=0, padx=25)
     else:
-        messengerFrame.grid_remove()
+        smsFrame.grid_remove()
 
 
 root = tk.Tk()
 
 root.title("Settings")
 root.resizable(False, False)
-root.geometry("600x400")
+root.geometry("750x500")
 root.eval('tk::PlaceWindow . center')
 
 frame = tk.Frame(root)
@@ -60,8 +60,8 @@ contentFrame.grid(row=0, column=0, padx=25)
 emailFrame = tk.LabelFrame(frame, text="Email")
 emailFrame.grid_remove()
 
-messengerFrame = tk.LabelFrame(frame, text="Messenger")
-messengerFrame.grid_remove()
+smsFrame = tk.LabelFrame(frame, text="SMS")
+smsFrame.grid_remove()
 
 # Content for Content Frame
 rtpsLabel = tk.Label(contentFrame, text="RTPS")
@@ -73,16 +73,18 @@ website = tk.Entry(contentFrame)
 delayLabel = tk.Label(contentFrame, text="Delay")
 delay = tk.Entry(contentFrame)
 emailState = tk.BooleanVar()
-messengerState = tk.BooleanVar()
+smsState = tk.BooleanVar()
 sendEmailLabel = tk.Label(contentFrame, text="Send Email")
 sendEmail = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=emailState,
                            command=lambda: showEmail(emailState.get()))
-sendMessengerLabel = tk.Label(contentFrame, text="Send Message")
-sendMessenger = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=messengerState,
-                               command=lambda: showMessenger(messengerState.get()))
+sendSmsLabel = tk.Label(contentFrame, text="Send Message")
+sendSms = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=smsState,
+                         command=lambda: showSms(smsState.get()))
 
 
 # Content for Email Frame
+emailPasswordLabel = tk.Label(emailFrame, text="Email Password")
+emailPassword = tk.Entry(emailFrame, show="*")
 emailAddressLabel = tk.Label(emailFrame, text="Email Address")
 emailAddress = tk.Entry(emailFrame)
 emailSubjectLabel = tk.Label(emailFrame, text="Email Subject")
@@ -90,26 +92,32 @@ emailSubject = tk.Entry(emailFrame)
 emailContentLabel = tk.Label(emailFrame, text="Email Content")
 emailContent = tk.Text(emailFrame, height=5, width=15)
 
-# Content for Messenger Frame
-messengerNumberLabel = tk.Label(messengerFrame, text="Tel. Number")
-messengerNumber = tk.Entry(messengerFrame)
-messengerContentLabel = tk.Label(messengerFrame, text="Messenger Text")
-messengerContent = tk.Text(messengerFrame, height=5, width=15)
+# Content for SMS Frame
+smsSecretLabel = tk.Label(smsFrame, text="SMS Secret")
+smsSecret = tk.Entry(smsFrame)
+smsKeyLabel = tk.Label(smsFrame, text="SMS Key")
+smsKey = tk.Entry(smsFrame)
+smsNumberLabel = tk.Label(smsFrame, text="Tel. Number")
+smsNumber = tk.Entry(smsFrame)
+smsContentLabel = tk.Label(smsFrame, text="SMS Text")
+smsContent = tk.Text(smsFrame, height=5, width=15)
 
 # Add the items to the Frame
 contentItems = [[rtpsLabel, rtps], [programLabel, program], [websiteLabel, website], [delayLabel, delay],
-                [sendEmailLabel, sendEmail], [sendMessengerLabel, sendMessenger]]
-emailItems = [[emailAddressLabel, emailAddress], [emailSubjectLabel, emailSubject], [emailContentLabel, emailContent]]
-messengerItems = [[messengerNumberLabel, messengerNumber], [messengerContentLabel, messengerContent]]
+                [sendEmailLabel, sendEmail], [sendSmsLabel, sendSms]]
+emailItems = [[emailPasswordLabel, emailPassword], [emailAddressLabel, emailAddress], [emailSubjectLabel, emailSubject],
+              [emailContentLabel, emailContent]]
+smsItems = [[smsSecretLabel, smsSecret], [smsKeyLabel, smsKey], [smsNumberLabel, smsNumber],
+            [smsContentLabel, smsContent]]
 addInputs(contentItems)
 addInputs(emailItems)
-addInputs(messengerItems)
+addInputs(smsItems)
 
 saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtps.get(), program.get(), website.get(),
                                                          emailState.get(), emailAddress.get(), emailSubject.get(),
                                                          emailContent.get(1.0, "end-1c"),
-                                                         messengerState.get(), messengerNumber.get(),
-                                                         messengerContent.get(1.0, "end-1c")))
+                                                         smsState.get(), smsNumber.get(),
+                                                         smsContent.get(1.0, "end-1c")))
 saveButton.pack()
 
 root.mainloop()
