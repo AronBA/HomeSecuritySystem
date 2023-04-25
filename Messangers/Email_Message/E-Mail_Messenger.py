@@ -3,10 +3,6 @@ import ssl
 import smtplib
 
 password = ''
-mainSender = 'Modul0426@gmail.com'
-mainReceiver = 'bojan.rodic@stud.edubs.ch'
-mainMsg = "movement detected"
-camera = "#1"
 
 
 def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str):
@@ -25,6 +21,3 @@ There was motion detected by camera #{cameraNumber}
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(sender, password)
         smtp.sendmail(sender,receiver, em.as_string())
-
-
-sendemail(1, mainReceiver, mainSender, mainMsg, "Motion detected by security system")
