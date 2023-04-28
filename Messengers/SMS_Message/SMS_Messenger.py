@@ -23,6 +23,3 @@ Motion detected by Camera #{cameraNum}
         print("Message sent successfully.")
     else:
         print(f"Message failed with error: {response['messages'][0]['error-text']}")
-
-
-sendSMS("+41779611539", 2, "hi")
