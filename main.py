@@ -8,8 +8,8 @@ import numpy as np
 import threading
 from playsound import playsound
 import requests
-import Messangers.SMS_Message as sms
-import Messangers.Email_Message as email
+import Messengers.SMS_Message as sms
+import Messengers.Email_Message as email
 import logging
 
 # ------------------------important for development environment------------------------------------
@@ -156,7 +156,7 @@ while True:
     if motion_detected and time.time() > motion_previous_time + motion_detection_cooldown:
         logging.info("Detected a Motion")
         if not env_local and env_production:
-            sms.sendSMS("+41779611539", 2, "hi")
+            sms.sendSMS("", 2, "hi")
             logging.debug("Send SmS")
             email.sendemail(1, email.mainReceiver, email.mainSender, email.mainMsg,
                             "Motion detected by security system")
