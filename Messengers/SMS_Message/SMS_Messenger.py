@@ -1,9 +1,5 @@
 import vonage
-from configparser import ConfigParser
 
-config = ConfigParser()
-config.read("settings.ini")
-config.get("Default", )
 client = vonage.Client(key="", secret="")
 sms = vonage.Sms(client=client)
 
