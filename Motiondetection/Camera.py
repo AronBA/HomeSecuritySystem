@@ -2,7 +2,9 @@ import cv2
 import time
 import threading
 import playsound
-
+import Messengers.SMS_Message
+import Messengers.Email_Message
+import Relais
 
 class Camera:
     amountofcameras = 0
@@ -34,9 +36,11 @@ class Camera:
         print(f"Created camera nr.{self.id}")
 
     def activateSound(self):
+        #playsound.playsound(self.path_sound_file)
         print(f"Camera {self.id} played sound")
 
     def activateRelais(self):
+
         print(f"Camera {self.id} activated relais")
 
     def deactivateRelais(self):
