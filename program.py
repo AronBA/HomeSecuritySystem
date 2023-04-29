@@ -6,13 +6,14 @@ config = ConfigParser()
 
 
 def save(Delay="", RTSP="", Website="", Program="",
-         EmailState=0, EmailAdress="", EmailSubject="", EmailContent="",
+         EmailState=0, EmailPassword="", EmailAdress="", EmailSubject="", EmailContent="",
          SmsState=0, MessengerNumber="", MessengerContent=""):
     config.set("DEFAULT", "Delay", Delay)
     config.set("DEFAULT", "RTSP", RTSP)
     config.set("DEFAULT", "Program", Program)
     config.set("DEFAULT", "Website", Website)
     config.set("DEFAULT", "EmailState", f"{EmailState}")
+    config.set("DEFAULT", "EmailPassword", EmailPassword)
     config.set("DEFAULT", "EmailAddress", EmailAdress)
     config.set("DEFAULT", "EmailSubject", EmailSubject)
     config.set("DEFAULT", "EmailContent", EmailContent)
@@ -94,12 +95,16 @@ sendSms = tk.Checkbutton(contentFrame, onvalue=1, offvalue=0, variable=smsState,
 # Content for Email Frame
 emailPasswordLabel = tk.Label(emailFrame, text="Email Password")
 emailPassword = tk.Entry(emailFrame, show="*")
+emailPassword.insert(0, config.get("DEFAULT", "emailpassword"))
 emailAddressLabel = tk.Label(emailFrame, text="Email Address")
 emailAddress = tk.Entry(emailFrame)
+emailAddress.insert(0, config.get("DEFAULT", "emailaddress"))
 emailSubjectLabel = tk.Label(emailFrame, text="Email Subject")
 emailSubject = tk.Entry(emailFrame)
+emailSubject.insert(0, config.get("DEFAULT", "emailsubject"))
 emailContentLabel = tk.Label(emailFrame, text="Email Content")
 emailContent = tk.Text(emailFrame, height=5, width=15)
+emailContent.insert(tk.INSERT, config.get("DEFAULT", "emailcontent"))
 
 # Content for SMS Frame
 smsSecretLabel = tk.Label(smsFrame, text="SMS Secret")
@@ -123,8 +128,8 @@ addInputs(emailItems)
 addInputs(smsItems)
 
 saveButton = tk.Button(text="Save", command=lambda: save(delay.get(), rtsp.get(), program.get(), website.get(),
-                                                         emailState.get(), emailAddress.get(), emailSubject.get(),
-                                                         emailContent.get(1.0, "end-1c"),
+                                                         emailState.get(), emailPassword.get(), emailAddress.get(),
+                                                         emailSubject.get(), emailContent.get(1.0, "end-1c"),
                                                          smsState.get(), smsNumber.get(),
                                                          smsContent.get(1.0, "end-1c")))
 saveButton.pack()
