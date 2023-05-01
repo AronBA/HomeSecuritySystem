@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="../../settings.json"></script>
+  <script src='script.js' defer></script>
+</head>
+
+<body>
+  <h1>Settings</h1>
+  <a href="./cameras.html">
+    <h3>Cameras</h3>
+  </a>
+  <form method="get" action="http://localhost:4000/save">
+    <div class="wrapFrame">
+      <section class="frame">
+        <h2>Settings</h2>
+        <div>
+          <div>
+            <label>RTSP</label>
+            <label>Program</label>
+            <label>Website</label>
+            <label>Delay</label>
+          </div>
+          <div>
+            <input name="rtsp" type="text" placeholder="RTSP">
+            <input name="program" type="text" placeholder="Program">
+            <input name="website" type="text" placeholder="Website">
+            <input name="delay" type="number" placeholder="Delay">
+          </div>
+        </div>
+      </section>
+      <section class="frame">
+        <h2>Email</h2>
+        <div>
+          <div>
+            <label>Send Email</label>
+            <label>Email Password</label>
+            <label>Email Subject</label>
+            <label>Email Content</label>
+          </div>
+          <div>
+            <input name="emailState" id="emailState" type="checkbox">
+            <input name="emailPassword" class="emailInput" type="password" placeholder="Email Password">
+            <input name="emailSubject" class="emailInput" type="text" placeholder="Email Subject">
+            <textarea name="emailContent" class="emailInput" cols="20" rows="5" placeholder="Email Content"></textarea>
+          </div>
+        </div>
+      </section>
+      <section class="frame">
+        <h2>Sms</h2>
+        <div>
+          <div>
+            <label>Send SMS</label>
+            <label>SMS Secret</label>
+            <label>SMS Key</label>
+            <label>Tel. Number</label>
+            <label>SMS Text</label>
+          </div>
+          <div>
+            <input name="smsState" type="checkbox" id="smsState">
+            <input name="smsSecret" class="smsInput" type="password" placeholder="SMS Secret">
+            <input name="smsKey" class="smsInput" type="text" placeholder="SMS Key">
+            <input name="smsNumber" class="smsInput" type="number" placeholder="Tel. Number">
+            <textarea name="smsText" class="smsInput" cols="20" rows="5" placeholder="SMS Text"></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+    <input type="submit" value="Save">
+  </form>
+</body>
+
+</html>

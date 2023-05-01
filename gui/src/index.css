@@ -1,0 +1,85 @@
+:root {
+  --bg: rgb(212, 212, 212);
+  --text: rgb(24, 24, 24);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+  font-size: 5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+.wrapFrame {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.frame {
+  width: 100%;
+  height: 300px;
+}
+
+.frame div {
+  display: flex;
+  padding: 20px;
+}
+
+.frame div div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+form {
+  padding: 0 12%;
+}
+
+.wrapSubmit {
+  margin: 30px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* CAMERA */
+.wrapCamera {
+  display: flex;
+  gap: 20px;
+}
+
+.wrapCamera div {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+}
+.wrapCamera select {
+  width: 80px;
+  height: 100px;
+}
+.camera {
+  display: flex;
+  border-style: solid;
+}
