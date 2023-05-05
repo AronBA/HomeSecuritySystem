@@ -4,6 +4,7 @@ fetch('/data')
     .then(response => response.json())
     .then(json => {
         const cameras = json.devices.cameras
+        console.log(cameras)
         for (let i = 0; i < cameras.length; i++) {
             const cam = document.createElement("tr")
             cam.innerHTML =

@@ -1,15 +1,19 @@
 const emailState = document.getElementById("emailState")
 const emailInputs = document.querySelectorAll(".emailInput")
 
-emailState.addEventListener('click', (e) => {
+emailState.addEventListener('click', (e) => disableFields(e.target.checked))
+function disableFields(state) {
     emailInputs.forEach(input => {
-        input.disabled = !e.target.checked
+        input.readOnly = !state
     })
-})
+}
 
 fetch('/dataEmail')
     .then(response => response.json())
     .then(json => {
-        console.log(json)
-        document.getElementsByName()
+        emailInputs.forEach(input => {
+            input.value = json[input.name]
+        })
+        if (json.state) emailState.checked = true
+        else disableFields(false)
     })

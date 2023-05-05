@@ -41,6 +41,7 @@ app.get('/saveSettings', (req, res) => {
 })
 app.get('/saveEmail', (req, res) => {
     file.email.state = req.query.hasOwnProperty('state')
+    file.email.receiver = req.query.receiver
     file.email.password = req.query.password
     file.email.subject = req.query.subject
     file.email.content = req.query.content
@@ -50,6 +51,7 @@ app.get('/saveEmail', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/email.html'))
 })
 app.get('/saveSms', (req, res) => {
+    file.sms.state = req.query.hasOwnProperty('state')
     file.sms.secret = req.query.secret
     file.sms.key = req.query.key
     file.sms.number = req.query.number
@@ -64,7 +66,7 @@ app.get('/add', (req, res) => {
         {
             "name": req.query.name,
             "ip": req.query.ip,
-            "relais": req.query.relais
+            "relais": [...req.query.relais]
         }
     )
     fs.writeFile(fileName, JSON.stringify(file), (err) => {

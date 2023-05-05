@@ -1,1 +1,46 @@
-{"settings":{"program":"ff","website":"ff","delay":"1","threshold":"1"},"email":{"password":"","subject":"","content":""},"sms":{"smsSecret":"","smsKey":"","smsNumber":"","smsText":""},"devices":{"cameras":[{"name":"Garden","ip":"xyz","relais":[2,5]}]}}
+{
+    "settings": {
+        "program": "",
+        "website": "",
+        "delay": "",
+        "threshold": ""
+    },
+    "email": {
+        "password": "negus",
+        "subject": "topG",
+        "content": "michael jakobsen",
+        "state": true,
+        "receiver": "heehee@email.com"
+    },
+    "sms": {
+        "smsSecret": "",
+        "smsKey": "",
+        "smsNumber": "",
+        "smsText": "",
+        "secret": "bing chilling",
+        "key": "bing",
+        "number": "+447700",
+        "text": "bing chilling",
+        "state": false
+    },
+    "devices": {
+        "cameras": [
+            {
+                "name": "ff",
+                "ip": "ff",
+                "relais": [
+                    "0",
+                    "1"
+                ]
+            },
+            {
+                "name": "dafkdljkasf",
+                "ip": "öasdfj",
+                "relais": [
+                    "0",
+                    "2"
+                ]
+            }
+        ]
+    }
+}
