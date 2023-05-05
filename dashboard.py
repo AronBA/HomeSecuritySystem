@@ -2,7 +2,7 @@ import tkinter as tk
 from configparser import ConfigParser
 import os
 import subprocess
-
+import signal
 config = ConfigParser()
 process = None
 
@@ -29,6 +29,13 @@ def run():
     path = "/usr/bin/python3"
     global process
     process=subprocess.Popen([path] + arg)
+    processid = process.pid
+
+    with open("Files/temp.txt","w") as f:
+        f.write(str(processid))
+
+
+
 
 
 
@@ -36,6 +43,12 @@ def run():
 def stop(process):
     if process is not None:
         process.terminate()
+    else:
+
+        with open("Files/temp.txt","rw") as f:
+            processid = int(f.read())
+            os.kill(processid,signal.SIGTERM)
+            f.write("")
 
 
 
