@@ -24,6 +24,9 @@ app.get('/email', (req, res) => {
 app.get('/sms', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/sms.html'))
 })
+app.get('/alarm', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/alarm.html'))
+})
 app.get('/addCamera', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/addCamera.html'))
 })
@@ -80,6 +83,17 @@ app.get('/delete', (req, res) => {
         if (err) return console.log(err)
     })
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
+})
+app.get('/saveAlarm', (req, res) => {
+    file.alarms.push(
+        {
+            "name": req.query.name,
+            "description": req.query.description
+        })
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/alarm.html'));
 })
 
 app.get('/data', (req, res) => {

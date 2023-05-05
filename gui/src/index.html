@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="./static/style/index.css">
   <script src='./static/js/settings.js' defer></script>
 </head>
-
 <body>
   <header>
     <nav>
@@ -28,14 +27,14 @@
       <a href="/sms" title="SMS">
         <i class="bi bi-chat-left-dots"></i>
       </a>
-      <a href="/alarm.html" title="Alarm">
+      <a href="/alarm" title="Alarm">
         <i class="bi bi-alarm"></i>
       </a>
     </nav>
   </header>
   <main>
-    <h1>Settings</h1>
-    <form method="get" action="/saveSettings">
+    <h1>Alarms</h1>
+    <form method="get" action="/saveAlarm">
       <div>
         <label class="form-label">Program</label>
         <input name="program" type="text" class="form-control settingsInput" placeholder="Program">
