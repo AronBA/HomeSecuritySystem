@@ -12,7 +12,7 @@ import Relais
 class Camera:
     amountofcameras = 0
 
-    def __init__(self, camera_adress=0, path_sound_file="", relais=0, relais_active_duration=1, motion_detection_cooldown=5,
+    def __init__(self, camera_adress=0, path_sound_file="", relais=0, relais_active_duration=5, motion_detection_cooldown=5,
                  motion_detection_threshold=1000, mail_recipient="", sms_recipient="", sms_message="", email_message=""):
 
         self.sms_message = sms_message
