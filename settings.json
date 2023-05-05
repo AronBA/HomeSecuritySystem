@@ -1,1 +1,53 @@
-{"settings":{"rtsp":"","program":"","website":"","delay":""},"email":{"emailPassword":"","emailSubject":"","emailContent":""},"sms":{"smsSecret":"","smsKey":"","smsNumber":"","smsText":""},"devices":{"cameras":[{"name":"Garden","ip":"xyz","relais":[2,5]},{"name":"Bathroom","ip":"43294","relais":["1","2","3"]},{"name":"Garage","ip":"55.2342.42111","relais":["0","4","12"]},{"name":"ttttt","ip":"ttttt","relais":["2","3"]}]}}
+{
+    "settings": {
+        "rtsp": "",
+        "program": "",
+        "website": "",
+        "delay": ""
+    },
+    "email": {
+        "emailPassword": "tzzz",
+        "emailSubject": "ffff",
+        "emailContent": "aaaa"
+    },
+    "sms": {
+        "smsSecret": "",
+        "smsKey": "",
+        "smsNumber": "",
+        "smsText": ""
+    },
+    "devices": {
+        "cameras": [
+            {
+                "name": "Garden",
+                "ip": "xyz",
+                "relais": [
+                    2,
+                    5
+                ]
+            },
+            {
+                "name": "Bathroom",
+                "ip": "405792345",
+                "relais": [
+                    "3",
+                    "4",
+                    "12",
+                    "13",
+                    "14"
+                ]
+            },
+            {
+                "name": "Cuum",
+                "ip": "23432",
+                "relais": [
+                    "0",
+                    "1",
+                    "2",
+                    "14",
+                    "15"
+                ]
+            }
+        ]
+    }
+}

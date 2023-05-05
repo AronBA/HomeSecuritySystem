@@ -12,7 +12,7 @@ const createWindow = () => {
     icon: path.join(__dirname + "/icon.ico")
   });
 
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadURL('http://localhost:4000/');
 };
 
 app.on('ready', createWindow);

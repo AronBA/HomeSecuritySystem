@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Camera</title>
+    <title>SMS</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./static/style/index.css">
+    <script src='./static/js/sms.js' defer></script>
 </head>
 
 <body>
@@ -18,47 +19,45 @@
             <a href="/" title="Settings">
                 <i class="bi bi-gear"></i>
             </a>
-            <a href="/cameras" title="Cameras">
+            <a href="/cameras" title="Camera">
                 <i class="bi bi-camera-video"></i>
             </a>
             <a href="/email" title="Email">
                 <i class="bi bi-envelope-at"></i>
             </a>
-            <a href="/sms" title="SMS">
+            <a class="current" title="SMS">
                 <i class="bi bi-chat-left-dots"></i>
             </a>
         </nav>
     </header>
     <main>
-        <h1>Add new Camera</h1>
+        <h1>SMS</h1>
         <form method="get" action="http://localhost:4000/add">
             <div>
-                <label class="form-label">Name</label>
-                <input name="name" type="text" class="form-control" placeholder="Name">
+                <label class="form-label">Send SMS</label>
+                <input name="smsState" id="smsState" type="checkbox" placeholder="Send SMS">
             </div>
             <div>
-                <label class="form-label">IP</label>
-                <input name="ip" type="text" class="form-control" placeholder="IP">
+                <label class="form-label">SMS Secret</label>
+                <input name="smsSecret" type="password" class="form-control smsInput" placeholder="SMS Secret">
             </div>
             <div>
-                <label class="form-label">Relais</label>
-                <select name="relais" id="relais" class="form-control" multiple>
-                </select>
+                <label class="form-label">SMS Key</label>
+                <input name="smsKey" type="text" class="form-control smsInput" placeholder="SMS Key" />
+            </div>
+            <div>
+                <label class="form-label">Tel. Number</label>
+                <input name="smsNumber" type="text" class="form-control smsInput" placeholder="Tel. Number" />
+            </div>
+            <div>
+                <label class="form-label">SMS Text</label>
+                <textarea name="smsText" class="form-control smsInput" rows="5" placeholder="SMS Text"></textarea>
             </div>
             <div class="wrapSubmit">
-                <input type="submit" value="Add Camera" class="btn btn-primary">
+                <input type="submit" value="Save" class="btn btn-primary">
             </div>
         </form>
     </main>
-    <script>
-        const relais = document.getElementById("relais")
-        for (let i = 0; i < 16; i++) {
-            const element = document.createElement('option')
-            element.value = i
-            element.innerHTML = i
-            relais.add(element)
-        }
-    </script>
 </body>
 
 </html>

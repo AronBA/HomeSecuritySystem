@@ -1,6 +1,6 @@
 const devices = document.getElementById("tableBody")
 
-fetch("../../settings.json")
+fetch('/data')
     .then(response => response.json())
     .then(json => {
         const cameras = json.devices.cameras
@@ -12,7 +12,7 @@ fetch("../../settings.json")
                 <td>${cameras[i].name}</td>
                 <td>${cameras[i].ip}</td>
                 <td>${cameras[i].relais.join()}</td>
-                <td><a href=http://localhost:4000/delete?id=${i}><button class='btn btn-danger'>Delete</button></a></td>
+                <td><a href='/delete?id=${i}'><button class='btn btn-danger'>Delete</button></a></td>
             `
             devices.appendChild(cam)
         }

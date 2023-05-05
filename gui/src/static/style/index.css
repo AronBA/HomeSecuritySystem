@@ -1,14 +1,17 @@
 :root {
-  --bg: rgb(212, 212, 212);
+  --bg: rgb(255, 255, 255);
+  --light: rgb(213, 213, 213);
   --text: rgb(24, 24, 24);
+  --headerWidth: 150px;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg);
   color: var(--text);
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
+  display: flex;
 }
 
 button {
@@ -27,6 +30,42 @@ h1 {
 
 h2 {
   font-size: 2em;
+}
+
+/* HEADER */
+header {
+  width: var(--headerWidth);
+  background-color: var(--light);
+  padding: 5% 0;
+}
+header nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+header nav a {
+  color: var(--text);
+  background-color: var(--bg);
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+header nav a.current {
+  color: var(--bg);
+  background-color: var(--text);
+}
+header nav i {
+  font-size: 25px;
+}
+
+/* MAIN CONTENT */
+main {
+  width: calc(100% - var(--headerWidth));
+  padding: 2%;
 }
 
 .wrapFrame {
@@ -54,6 +93,9 @@ h2 {
 
 form {
   padding: 0 12%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .wrapSubmit {
