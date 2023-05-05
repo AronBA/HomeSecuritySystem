@@ -1,22 +1,33 @@
+import json
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 import ssl
 import smtplib
+from parser.fileParser import getProjFile
 
-password = ''
+data = json.load(open(getProjFile("config.json")))["Email"]
+password = data["password"]
+receiver = data[""]
+sender = data["receiver"]
+msg = data["content"]
+subject = data["subject"]
 
 
-def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str, imgPath: str = ""):
+def sendemail(cameraNumber: int, imgPath: str = ""):
     em = MIMEMultipart('alternative')
     em['from'] = sender
     em['To'] = receiver
     em['Subject'] = subject
 
     if imgPath != "":
-        with open(imgPath, "rb") as IF:
-            f = IF.read()
-            image = bytes(f)
+        with open(getProjFile(imgPath), "rb") as IF:
+            try:
+                f = IF.read()
+                image = bytes(f)
+            except Exception:
+                raise Exception
+
         text = MIMEText(f"""<p>*******************************************</p>
 <p>There was motion detected by camera #{cameraNumber}</p>
 <p>*******************************************</p>
