@@ -40,19 +40,20 @@ app.get('/saveSettings', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/index.html'))
 })
 app.get('/saveEmail', (req, res) => {
-    file.email.password = req.query.emailPassword
-    file.email.subject = req.query.emailSubject
-    file.email.content = req.query.emailContent
+    file.email.state = req.query.hasOwnProperty('state')
+    file.email.password = req.query.password
+    file.email.subject = req.query.subject
+    file.email.content = req.query.content
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
     })
     res.sendFile(path.join(__dirname, 'src/email.html'))
 })
 app.get('/saveSms', (req, res) => {
-    file.sms.secret = req.query.smsSecret
-    file.sms.key = req.query.smsKey
-    file.sms.number = req.query.smsNumber
-    file.sms.text = req.query.smsText
+    file.sms.secret = req.query.secret
+    file.sms.key = req.query.key
+    file.sms.number = req.query.number
+    file.sms.text = req.query.text
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
     })
@@ -81,4 +82,13 @@ app.get('/delete', (req, res) => {
 
 app.get('/data', (req, res) => {
     res.json(file)
+})
+app.get('/dataSettings', (req, res) => {
+    res.json(file.settings)
+})
+app.get('/dataEmail', (req, res) => {
+    res.json(file.email)
+})
+app.get('/dataSms', (req, res) => {
+    res.json(file.sms)
 })

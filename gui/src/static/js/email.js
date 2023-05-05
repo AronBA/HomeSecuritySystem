@@ -6,3 +6,10 @@ emailState.addEventListener('click', (e) => {
         input.disabled = !e.target.checked
     })
 })
+
+fetch('/dataEmail')
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        document.getElementsByName()
+    })

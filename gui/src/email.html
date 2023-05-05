@@ -35,23 +35,24 @@
         <form method="get" action="/saveEmail">
             <div>
                 <label class="form-label">Send Email</label>
-                <input name="emailState" id="emailState" type="checkbox" placeholder="Send Email">
+                <input name="state" id="emailState" type="checkbox" placeholder="Send Email" />
             </div>
             <div>
                 <label class="form-label">Email Password</label>
-                <input name="emailPassword" type="password" class="form-control emailInput" placeholder="Email Password">
+                <input name="password" type="password" class="form-control emailInput"
+                    placeholder="Email Password" />
             </div>
             <div>
                 <label class="form-label">Email Subject</label>
-                <input name="emailSubject" type="password" class="form-control emailInput" placeholder="Email Subject">
+                <input name="subject" type="text" class="form-control emailInput" placeholder="Email Subject" />
             </div>
             <div>
                 <label class="form-label">Email Content</label>
-                <textarea name="emailContent" class="form-control emailInput" rows="5"
+                <textarea name="content" class="form-control emailInput" rows="5"
                     placeholder="Email Content"></textarea>
             </div>
             <div class="wrapSubmit">
-                <input type="submit" value="Save" class="btn btn-primary">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </main>
