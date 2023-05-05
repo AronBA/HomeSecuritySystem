@@ -30,11 +30,10 @@ app.get('/addCamera', (req, res) => {
 
 // Routes for CRUD
 app.get('/saveSettings', (req, res) => {
-    const data = req.query
-    file.settings.rtsp = data.rtsp
-    file.settings.program = data.program
-    file.settings.website = data.website
-    file.settings.delay = data.delay
+    file.settings.program = req.query.program
+    file.settings.website = req.query.website
+    file.settings.delay = req.query.delay
+    file.settings.threshold = req.query.threshold
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
     })

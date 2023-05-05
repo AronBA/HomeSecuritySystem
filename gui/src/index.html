@@ -31,11 +31,7 @@
   </header>
   <main>
     <h1>Settings</h1>
-    <form method="get" action="http://localhost:4000/save">
-      <div>
-        <label class="form-label">RTSP</label>
-        <input name="rtsp" type="text" class="form-control" placeholder="RTSP">
-      </div>
+    <form method="get" action="/save">
       <div>
         <label class="form-label">Program</label>
         <input name="program" type="password" class="form-control" placeholder="Program">
@@ -47,6 +43,10 @@
       <div>
         <label class="form-label">Delay</label>
         <input name="delay" type="number" class="form-control" placeholder="Delay" />
+      </div>
+      <div>
+        <label class="form-label">Threshold</label>
+        <input name="threshold" type="number" class="form-control" placeholder="Threshold" />
       </div>
       <div class="wrapSubmit">
         <input type="submit" value="Save" class="btn btn-primary">
