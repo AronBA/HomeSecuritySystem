@@ -7,13 +7,16 @@ import smtplib
 password = ''
 
 
-def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str, image: bytes = ""):
+def sendemail(cameraNumber: int, receiver: str, sender: str, msg: str, subject: str, imgPath: str = ""):
     em = MIMEMultipart('alternative')
     em['from'] = sender
     em['To'] = receiver
     em['Subject'] = subject
 
-    if image != "":
+    if imgPath != "":
+        with open(imgPath, "rb") as IF:
+            f = IF.read()
+            image = bytes(f)
         text = MIMEText(f"""<p>*******************************************</p>
 <p>There was motion detected by camera #{cameraNumber}</p>
 <p>*******************************************</p>
