@@ -82,6 +82,7 @@ app.get('/createDevice', (req, res) => {
             "id": crypto.randomBytes(16).toString("hex"),
             "name": req.query.name,
             "ip": req.query.ip,
+            "delay": req.query.delay
         }
     )
     fs.writeFile(fileName, JSON.stringify(file), (err) => {

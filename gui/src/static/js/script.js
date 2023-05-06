@@ -68,6 +68,7 @@ function setDevices() {
                     <th>${i + 1}</th>
                     <td>${devices[i].name}</td>
                     <td>${devices[i].ip}</td>
+                    <td>${devices[i].delay}</td>
                     <td><a href='/deleteDevice?id=${i}'><button class='btn btn-danger'><i class="bi bi-trash3"></i></button></a></td>
                 `
                 document.getElementById("tableBody").appendChild(row)
