@@ -1,46 +1,43 @@
 {
     "settings": {
-        "program": "",
-        "website": "",
+        "program": "ff",
+        "website": "undefined",
         "delay": "",
         "threshold": ""
     },
     "email": {
-        "password": "negus",
+        "password": "pword",
         "subject": "topG",
         "content": "michael jakobsen",
         "state": true,
         "receiver": "heehee@email.com"
     },
     "sms": {
-        "smsSecret": "",
-        "smsKey": "",
-        "smsNumber": "",
-        "smsText": "",
         "secret": "bing chilling",
         "key": "bing",
         "number": "+447700",
         "text": "bing chilling",
         "state": false
     },
-    "devices": {
-        "cameras": [
-            {
-                "name": "ff",
-                "ip": "ff",
-                "relais": [
-                    "0",
-                    "1"
-                ]
-            },
-            {
-                "name": "dafkdljkasf",
-                "ip": "öasdfj",
-                "relais": [
-                    "0",
-                    "2"
-                ]
-            }
-        ]
-    }
+    "cameras": [
+        {
+            "name": "ff",
+            "ip": "ff",
+            "relais": [
+                "0",
+                "1"
+            ]
+        },
+        {
+            "name": "dafkdljkasf",
+            "ip": "öasdfj",
+            "relais": [
+                "0",
+                "2"
+            ]
+        }
+    ],
+    "alarms": [
+
+    ]
 }

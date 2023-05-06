@@ -33,18 +33,18 @@
     </nav>
   </header>
   <main>
-    <h1>Alarms</h1>
-    <form method="get" action="/saveAlarm">
+    <h1>Settings</h1>
+    <form method="get" action="/saveSettings">
       <div>
         <label class="form-label">Program</label>
-        <input name="program" type="text" class="form-control settingsInput" placeholder="Program">
+        <input name="program" type="file" class="form-control settingsInput" placeholder="Program">
       </div>
       <div>
         <label class="form-label">Website</label>
-        <input name="website" type="text" class="form-control settingsInput" placeholder="Website" />
+        <input name="website" type="url" class="form-control settingsInput" placeholder="Website" />
       </div>
       <div>
-        <label class="form-label">Delay</label>
+        <label class="form-label">Delay(seconds)</label>
         <input name="delay" type="number" class="form-control settingsInput" placeholder="Delay" />
       </div>
       <div>

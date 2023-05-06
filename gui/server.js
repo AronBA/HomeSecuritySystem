@@ -30,8 +30,11 @@ app.get('/alarm', (req, res) => {
 app.get('/addCamera', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/addCamera.html'))
 })
+app.get('/addAlarm', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/addAlarm.html'))
+})
 
-// Routes for CRUD
+// Save to File
 app.get('/saveSettings', (req, res) => {
     file.settings.program = req.query.program
     file.settings.website = req.query.website
@@ -64,8 +67,29 @@ app.get('/saveSms', (req, res) => {
     })
     res.sendFile(path.join(__dirname, 'src/sms.html'))
 })
-app.get('/add', (req, res) => {
-    file.devices.cameras.push(
+
+// Create and Delete
+app.get('/createAlarm', (req, res) => {
+    file.alarms.push(
+        {
+            "name": req.query.name,
+            "atr": req.query.atr
+        }
+    )
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/alarm.html'))
+})
+app.get('/deleteAlarm', (req, res) => {
+    file.alarms.splice(req.query.id, 1)
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/alarm.html'));
+})
+app.get('/createCamera', (req, res) => {
+    file.cameras.push(
         {
             "name": req.query.name,
             "ip": req.query.ip,
@@ -77,28 +101,16 @@ app.get('/add', (req, res) => {
     })
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
 })
-app.get('/delete', (req, res) => {
-    file.devices.cameras.splice(req.query.id, 1);
+app.get('/deleteCamera', (req, res) => {
+    file.cameras.splice(req.query.id, 1)
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
     })
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
 })
-app.get('/saveAlarm', (req, res) => {
-    file.alarms.push(
-        {
-            "name": req.query.name,
-            "description": req.query.description
-        })
-    fs.writeFile(fileName, JSON.stringify(file), (err) => {
-        if (err) return console.log(err)
-    })
-    res.sendFile(path.join(__dirname, 'src/alarm.html'));
-})
 
-app.get('/data', (req, res) => {
-    res.json(file)
-})
+
+// Get DATA
 app.get('/dataSettings', (req, res) => {
     res.json(file.settings)
 })
@@ -107,4 +119,10 @@ app.get('/dataEmail', (req, res) => {
 })
 app.get('/dataSms', (req, res) => {
     res.json(file.sms)
+})
+app.get('/dataCamera', (req, res) => {
+    res.json(file.cameras)
+})
+app.get('/dataAlarm', (req, res) => {
+    res.json(file.alarms)
 })
