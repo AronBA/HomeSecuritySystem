@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const crypto = require("crypto");
 const path = require('path')
 const fs = require('fs')
 const fileName = '../settings.json'
@@ -78,6 +79,7 @@ app.get('/saveSms', (req, res) => {
 app.get('/createDevice', (req, res) => {
     file.devices.push(
         {
+            "id": crypto.randomBytes(16).toString("hex"),
             "name": req.query.name,
             "ip": req.query.ip,
         }
@@ -88,11 +90,13 @@ app.get('/createDevice', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/device.html'));
 })
 app.get('/createAlarm', (req, res) => {
-    console.log(req.query)
+    console.log(req.query.devices)
     file.alarms.push(
         {
             "name": req.query.name,
-            "atr": req.query.atr
+            "email": req.query.hasOwnProperty('email'),
+            "sms": req.query.hasOwnProperty('sms'),
+            "devices": [...req.query.devices]
         }
     )
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
@@ -114,6 +118,9 @@ app.get('/createCamera', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
 })
 app.get('/deleteDevice', (req, res) => {
+    const id = file.devices[req.query.id].id
+    const f = file.alarms.filter(alarm => alarm.devices.includes("id" == id))
+    console.log(f)
     file.devices.splice(req.query.id, 1)
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
@@ -137,6 +144,5 @@ app.get('/deleteCamera', (req, res) => {
 
 // Get DATA
 app.get('/data', (req, res) => {
-    console.log(req.query)
     res.json(file[req.query.d])
 })
