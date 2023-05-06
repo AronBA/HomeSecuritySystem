@@ -30,12 +30,14 @@
             <a href="/alarm" title="Alarm">
                 <i class="bi bi-alarm"></i>
             </a>
+            <a href="/device" title="Devices">
+                <i class="bi bi-megaphone"></i>
+            </a>
+
         </nav>
     </header>
     <main>
         <h1>Add Alarm</h1>
-        Name, Events(SMS, MAIL, LAMP, SIRENEN)
-        IP Ein, IP Aus
         <form method="get" action="/createAlarm">
             <div>
                 <label class="form-label">Name</label>
@@ -43,11 +45,11 @@
             </div>
             <div>
                 <label class="form-label">Send Email</label>
-                <input name="atr[email]" type="checkbox" />
+                <input name="atr[]" value="email" type="checkbox" />
             </div>
             <div>
                 <label class="form-label">Send SMS</label>
-                <input name="atr[sms]" type="checkbox" />
+                <input name="atr[]" value="sms" type="checkbox" />
             </div>
             <div>
                 <label class="form-label">Type</label>

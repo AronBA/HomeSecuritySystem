@@ -9,7 +9,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    icon: path.join(__dirname + "/icon.ico")
+    icon: path.join(__dirname + "/logo.png")
   });
 
   mainWindow.loadURL('http://localhost:4000/');

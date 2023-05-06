@@ -27,11 +27,17 @@ app.get('/sms', (req, res) => {
 app.get('/alarm', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/alarm.html'))
 })
+app.get('/device', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/device.html'))
+})
 app.get('/addCamera', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/addCamera.html'))
 })
 app.get('/addAlarm', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/addAlarm.html'))
+})
+app.get('/addDevice', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/addDevice.html'))
 })
 
 // Save to File
@@ -69,7 +75,20 @@ app.get('/saveSms', (req, res) => {
 })
 
 // Create and Delete
+app.get('/createDevice', (req, res) => {
+    file.devices.push(
+        {
+            "name": req.query.name,
+            "ip": req.query.ip,
+        }
+    )
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/device.html'));
+})
 app.get('/createAlarm', (req, res) => {
+    console.log(req.query)
     file.alarms.push(
         {
             "name": req.query.name,
@@ -80,13 +99,6 @@ app.get('/createAlarm', (req, res) => {
         if (err) return console.log(err)
     })
     res.sendFile(path.join(__dirname, 'src/alarm.html'))
-})
-app.get('/deleteAlarm', (req, res) => {
-    file.alarms.splice(req.query.id, 1)
-    fs.writeFile(fileName, JSON.stringify(file), (err) => {
-        if (err) return console.log(err)
-    })
-    res.sendFile(path.join(__dirname, 'src/alarm.html'));
 })
 app.get('/createCamera', (req, res) => {
     file.cameras.push(
@@ -101,6 +113,20 @@ app.get('/createCamera', (req, res) => {
     })
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
 })
+app.get('/deleteDevice', (req, res) => {
+    file.devices.splice(req.query.id, 1)
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/device.html'));
+})
+app.get('/deleteAlarm', (req, res) => {
+    file.alarms.splice(req.query.id, 1)
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    res.sendFile(path.join(__dirname, 'src/alarm.html'));
+})
 app.get('/deleteCamera', (req, res) => {
     file.cameras.splice(req.query.id, 1)
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
@@ -108,7 +134,6 @@ app.get('/deleteCamera', (req, res) => {
     })
     res.sendFile(path.join(__dirname, 'src/cameras.html'));
 })
-
 
 // Get DATA
 app.get('/dataSettings', (req, res) => {
@@ -125,4 +150,8 @@ app.get('/dataCamera', (req, res) => {
 })
 app.get('/dataAlarm', (req, res) => {
     res.json(file.alarms)
+})
+app.get('/data', (req, res) => {
+    console.log(req.query)
+    res.json(file['devices'])
 })
