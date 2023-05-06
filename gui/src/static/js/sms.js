@@ -8,7 +8,7 @@ function disableFields(state) {
     })
 }
 
-fetch('/dataSms')
+fetch('/data?d=sms')
     .then(response => response.json())
     .then(json => {
         smsInputs.forEach(input => {

@@ -136,22 +136,7 @@ app.get('/deleteCamera', (req, res) => {
 })
 
 // Get DATA
-app.get('/dataSettings', (req, res) => {
-    res.json(file.settings)
-})
-app.get('/dataEmail', (req, res) => {
-    res.json(file.email)
-})
-app.get('/dataSms', (req, res) => {
-    res.json(file.sms)
-})
-app.get('/dataCamera', (req, res) => {
-    res.json(file.cameras)
-})
-app.get('/dataAlarm', (req, res) => {
-    res.json(file.alarms)
-})
 app.get('/data', (req, res) => {
     console.log(req.query)
-    res.json(file['devices'])
+    res.json(file[req.query.d])
 })

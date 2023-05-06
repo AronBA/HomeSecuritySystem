@@ -8,7 +8,7 @@ function disableFields(state) {
     })
 }
 
-fetch('/dataEmail')
+fetch('/data?d=email')
     .then(response => response.json())
     .then(json => {
         emailInputs.forEach(input => {
