@@ -85,3 +85,12 @@ form {
   display: flex;
   justify-content: center;
 }
+
+/* TABLE */
+thead a {
+  color: var(--text);
+  text-decoration: none;
+}
+thead a:hover {
+  text-decoration: underline;
+}

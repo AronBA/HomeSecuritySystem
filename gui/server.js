@@ -106,7 +106,6 @@ app.get('/createAlarm', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/alarm.html'))
 })
 app.get('/createCamera', (req, res) => {
-    console.log(req.query)
     file.cameras.push(
         {
             "name": req.query.name,

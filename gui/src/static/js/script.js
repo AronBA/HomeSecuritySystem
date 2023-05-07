@@ -17,12 +17,17 @@ async function setCameras() {
 
     for (let i = 0; i < cameras.length; i++) {
         const row = document.createElement("tr")
+        let alarmsString = []
+        cameras[i].alarms.forEach(alarmId => {
+            const alarm = alarms.find(a => a.id == alarmId)
+            alarmsString.push(alarm.name)
+        })
         row.innerHTML =
             `
             <th>${i + 1}</th>
             <td>${cameras[i].name}</td>
             <td>${cameras[i].ip}</td>
-            <td>${cameras[i].alarms.join(', ')}</td>
+            <td>${alarmsString.join(', ')}</td>
             <td><a href='/deleteCamera?id=${i}'><button class='btn btn-danger'><i class="bi bi-trash3"></i></button></a></td>
         `
         document.getElementById("tableBody").appendChild(row)
@@ -70,15 +75,6 @@ async function setDevices() {
     }
 }
 
-async function setAddAlarm() {
-    const devices = await getData('devices')
-    let options = ""
-    devices.forEach(device => {
-        options += `<option value='${device.id}'>${device.name}</option>`
-    })
-    document.getElementById('devices').innerHTML = options
-}
-
 async function setAddCamera() {
     const alarms = await getData('alarms')
     let options = ""
@@ -86,4 +82,13 @@ async function setAddCamera() {
         options += `<option value='${alarm.id}'>${alarm.name}</option>`
     })
     document.getElementById('alarms').innerHTML = options
+}
+
+async function setAddAlarm() {
+    const devices = await getData('devices')
+    let options = ""
+    devices.forEach(device => {
+        options += `<option value='${device.id}'>${device.name}</option>`
+    })
+    document.getElementById('devices').innerHTML = options
 }
