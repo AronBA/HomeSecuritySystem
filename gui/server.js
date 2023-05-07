@@ -91,9 +91,9 @@ app.get('/createDevice', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/device.html'));
 })
 app.get('/createAlarm', (req, res) => {
-    console.log(req.query.devices)
     file.alarms.push(
         {
+            "id": crypto.randomBytes(16).toString("hex"),
             "name": req.query.name,
             "email": req.query.hasOwnProperty('email'),
             "sms": req.query.hasOwnProperty('sms'),
@@ -106,11 +106,12 @@ app.get('/createAlarm', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/alarm.html'))
 })
 app.get('/createCamera', (req, res) => {
+    console.log(req.query)
     file.cameras.push(
         {
             "name": req.query.name,
             "ip": req.query.ip,
-            "relais": [...req.query.relais]
+            "alarms": [...req.query.alarms]
         }
     )
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
