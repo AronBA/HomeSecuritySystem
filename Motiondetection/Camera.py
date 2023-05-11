@@ -55,7 +55,7 @@ class Camera:
 
 
 
-        print(f"Camer {self.id} detected a human")
+
     def activateRelais(self):
         print(f"Camera {self.id} activated relais")
 
