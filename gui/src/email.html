@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/style/index.css">
+    <script src='./static/js/email.js' defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" title="Settings">
+                <i class="bi bi-gear"></i>
+            </a>
+            <a href="/cameras" title="Cameras">
+                <i class="bi bi-camera-video"></i>
+            </a>
+            <a class="current" title="Email">
+                <i class="bi bi-envelope-at"></i>
+            </a>
+            <a href="/sms" title="SMS">
+                <i class="bi bi-chat-left-dots"></i>
+            </a>
+            <a href="/alarm" title="Alarms">
+                <i class="bi bi-alarm"></i>
+            </a>
+            <a href="/device" title="Devices">
+                <i class="bi bi-megaphone"></i>
+            </a>
+        </nav>
+    </header>
+    <main>
+        <h1>Email</h1>
+        <form method="get" action="/saveEmail">
+            <div>
+                <label class="form-label">Send Email</label>
+                <input name="state" id="emailState" type="checkbox" placeholder="Send Email" />
+            </div>
+
+            <div>
+                <label class="form-label">Email Receiver</label>
+                <input name="receiver" type="email" class="form-control emailInput" placeholder="Email Receiver" />
+            </div>
+            <div>
+                <label class="form-label">Email Password</label>
+                <input name="password" type="password" class="form-control emailInput" placeholder="Email Password" />
+            </div>
+            <div>
+                <label class="form-label">Email Subject</label>
+                <input name="subject" type="text" class="form-control emailInput" placeholder="Email Subject" />
+            </div>
+            <div>
+                <label class="form-label">Email Content</label>
+                <textarea name="content" class="form-control emailInput" rows="5"
+                    placeholder="Email Content"></textarea>
+            </div>
+            <div class="wrapSubmit">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
