@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Alarm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/style/index.css">
+    <script src='./static/js/script.js' defer></script>
+</head>
+
+<body onload="setAddAlarm()">
+    <header>
+        <nav>
+            <a href="/" title="Settings">
+                <i class="bi bi-gear"></i>
+            </a>
+            <a href="/cameras" title="Cameras">
+                <i class="bi bi-camera-video"></i>
+            </a>
+            <a href="/email" title="Email">
+                <i class="bi bi-envelope-at"></i>
+            </a>
+            <a href="/sms" title="SMS">
+                <i class="bi bi-chat-left-dots"></i>
+            </a>
+            <a href="/alarm" title="Alarm">
+                <i class="bi bi-alarm"></i>
+            </a>
+            <a href="/device" title="Devices">
+                <i class="bi bi-megaphone"></i>
+            </a>
+        </nav>
+    </header>
+    <main>
+        <h1>Add Alarm</h1>
+        <form method="get" action="/createAlarm">
+            <div>
+                <label class="form-label">Name</label>
+                <input name="name" type="text" class="form-control" placeholder="Name" />
+            </div>
+            <div>
+                <label class="form-label">Send Email</label>
+                <input name="email" type="checkbox" />
+            </div>
+            <div>
+                <label class="form-label">Send SMS</label>
+                <input name="sms" type="checkbox" />
+            </div>
+            <select name="devices[]" id="devices" class="form-control" multiple>
+            </select>
+            <div class="wrapSubmit">
+                <input type="submit" value="Add Alarm" class="btn btn-primary">
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
