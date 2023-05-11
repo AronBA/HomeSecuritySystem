@@ -1,10 +1,17 @@
 import vonage
+import json
+from parser.fileParser import getProjFile
 
-client = vonage.Client(key="", secret="")
+data = json.load(open(getProjFile("config.json")))["sms"]
+secret = data["smsSecret"]
+key = data["smsKey"]
+client = vonage.Client(key=key, secret=secret)
 sms = vonage.Sms(client=client)
+recipient = data["smsNumber"]
+msg = data["smsText"]
 
 
-def sendSMS(recipient, cameraNum: int, msg):
+def sendSMS(cameraNum: int):
     response = sms.send_message(
         {
             "from": "C.A.S",
@@ -23,6 +30,3 @@ Motion detected by Camera #{cameraNum}
         print("Message sent successfully.")
     else:
         print(f"Message failed with error: {response['messages'][0]['error-text']}")
-
-
-sendSMS("+41779611539", 2, "hi")
