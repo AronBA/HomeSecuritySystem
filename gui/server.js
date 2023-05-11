@@ -120,8 +120,9 @@ app.get('/createCamera', (req, res) => {
 })
 app.get('/deleteDevice', (req, res) => {
     const id = file.devices[req.query.id].id
-    const f = file.alarms.filter(alarm => alarm.devices.includes("id" == id))
-    console.log(f)
+    file.alarms.forEach(alarm => {
+        alarm.devices = alarm.devices.filter(device => { return device !== id })
+    })
     file.devices.splice(req.query.id, 1)
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
@@ -129,6 +130,10 @@ app.get('/deleteDevice', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/device.html'));
 })
 app.get('/deleteAlarm', (req, res) => {
+    const id = file.alarms[req.query.id].id
+    file.cameras.forEach(camera => {
+        camera.alarms = camera.alarms.filter(alarm => { return alarm !== id })
+    })
     file.alarms.splice(req.query.id, 1)
     fs.writeFile(fileName, JSON.stringify(file), (err) => {
         if (err) return console.log(err)
