@@ -3,11 +3,16 @@ import time
 import threading
 import playsound
 
+human_cascade = cv2.CascadeClassifier('Files/haarcascade_upperbody.xml')
+
 
 class Camera:
     amountofcameras = 0
 
-    def __init__(self, camera_adress, path_sound_file, relais,relais_active_duration,motion_detection_cooldown,motion_detection_threshold):
+    def __init__(self, camera_adress, path_sound_file, relais, relais_active_duration, motion_detection_cooldown,
+                 motion_detection_threshold):
+        self.gray = None
+        self.ret = None
         Camera.amountofcameras += 1
 
         self.frame = None
@@ -36,6 +41,21 @@ class Camera:
     def activateSound(self):
         print(f"Camera {self.id} played sound")
 
+    def checkHuman(self):
+        self.gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
+        # Detect humans in the frame using the Haar Cascade classifier
+        humans = human_cascade.detectMultiScale(self.gray, scaleFactor=1.1, minNeighbors=1, minSize=(10, 10),
+                                                maxSize=(10000, 10000))
+
+        # Draw a bounding box around each detected human
+        for (x, y, w, h) in humans:
+            cv2.rectangle(self.frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        return len(humans) > 0
+
+
+
+        print(f"Camer {self.id} detected a human")
     def activateRelais(self):
         print(f"Camera {self.id} activated relais")
 
@@ -44,7 +64,6 @@ class Camera:
 
     def resetFrame(self):
         self.first_frame = self.gray_frame
-
 
     def checkmotion(self):
         motion_detected = False
@@ -77,15 +96,33 @@ class Camera:
 
         # this will trigger all actions when a new motion is detected
         if motion_detected and time.time() > self.motion_previous_time + self.motion_detection_cooldown:
-            threading.Thread(target=self.activateSound, daemon=True).start()
-            threading.Thread(target=self.activateRelais, daemon=True).start()
 
+
+            if self.checkHuman():
+                print("Human")
+                threading.Thread(target=self.activateSound, daemon=True).start()
+                threading.Thread(target=self.activateRelais, daemon=True).start()
+                # threading.Thread(target=self.sendsms, daemon=True).start()
+                # threading.Thread(target=self.sendemail, daemon=True).start()
+            else:
+                print("no human but motion")
             self.motion_previous_time = time.time()
             self.motion_detected = True
+
 
         # this will deactivate the relais after n amount of time
         if self.motion_previous_time + self.relais_active_duration <= time.time() and self.relais_active:
             self.relais_active = False
             self.deactivateRelais()
+
+        self.motion_frame_counter += 1
+        self.ret, self.frame = self.cap.read()
+
+        # Convert the frame to grayscale for better human detection
+
+
+
+
+
 
         self.motion_frame_counter += 1
