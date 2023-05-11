@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const crypto = require("crypto");
+const crypto = require("crypto")
+const { exec } = require('child_process')
 const path = require('path')
 const fs = require('fs')
 const fileName = '../settings.json'
@@ -11,6 +12,18 @@ app.listen(4000, () => {
 })
 
 app.use('/static', express.static(path.join(__dirname, 'src/static')))
+
+// Start the program
+app.get('/start', (req, res) => {
+    exec('python ../Motiondetection/motiondetection.py', (error, stdout, stderr) => {
+        if(error) {
+            console.log(error)
+            return
+        }
+        console.log(stdout)
+        console.log(stderr)
+    })
+})
 
 // Routes for pages
 app.get('/', (req, res) => {

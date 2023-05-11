@@ -1,3 +1,35 @@
+function checkPage(page, check) {
+    if(page == check) {
+        return 'current'
+    }
+    return ''
+}
+function setNavBar(page) {
+    const navaBar = `
+    <nav>
+        <a class='${checkPage(page, 'settings')}' title="Settings">
+            <i class="bi bi-gear"></i>
+        </a>
+        <a class='${checkPage(page, 'settings')}' href="/cameras" title="Cameras">
+            <i class="bi bi-camera-video"></i>
+        </a>
+        <a href="/email" title="Email">
+            <i class="bi bi-envelope-at"></i>
+        </a>
+        <a href="/sms" title="SMS">
+            <i class="bi bi-chat-left-dots"></i>
+        </a>
+        <a href="/alarm" title="Alarms">
+            <i class="bi bi-alarm"></i>
+        </a>
+        <a href="/device" title="Devices">
+            <i class="bi bi-megaphone"></i>
+        </a>
+    </nav>
+    `
+    document.getElementById('header')
+}
+
 async function getData(data) {
     return fetch(`/data?d=${data}`)
         .then(response => response.json())
