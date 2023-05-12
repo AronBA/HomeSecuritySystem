@@ -12,6 +12,24 @@ app.listen(4000, () => {
 
 app.use('/static', express.static(path.join(__dirname, 'src/static')))
 
+app.get('/start', () => {
+    const { spawn } = require('child_process')
+
+    const pythonProcess = spawn('python', ['../Motiondetection/motiondetection.py'])
+
+    pythonProcess.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    })
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    })
+
+    pythonProcess.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+    })
+})
+
 // Routes for pages
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/index.html'))
