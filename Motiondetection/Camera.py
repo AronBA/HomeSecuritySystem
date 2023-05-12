@@ -4,12 +4,11 @@ import time
 import threading
 import playsound
 import requests
+
 import os
-from parser.fileParser import getProjFile
 
-path = getProjFile('Files/haarcascade_upperbody.xml')
+path = os.path.dirname(os.getcwd()) + '/Files/haarcascade_upperbody.xml'
 human_cascade = cv2.CascadeClassifier(path)
-
 
 class Camera:
     amountofcameras = 0
@@ -31,7 +30,6 @@ class Camera:
         self.path_sound_file = path_sound_file
 
         self.relais_active = False
-
 
         self.motion_previous_time = 0
         self.motion_detection_cooldown = int(motion_detection_cooldown)
@@ -69,7 +67,7 @@ class Camera:
         for i in temp:
             timestamp += i + "-"
         timestamp = timestamp[:-1]
-        p = getProjFile(f"images\\{timestamp}_{self.name}.png")
+        p = os.path.dirname(os.getcwd()) + f"{timestamp}_{self.name}.png"
         val = cv2.imwrite(p, self.frame)
         print("took photo" + f" {val}")
 
@@ -123,7 +121,7 @@ class Camera:
                         for devices in self.dev:
                             if did == devices["id"]:
                                 self.relais_active = True
-                                self.activateRelais(devices["relais"])
+                                self.activateRelais(devices["ip"])
 
 
 
