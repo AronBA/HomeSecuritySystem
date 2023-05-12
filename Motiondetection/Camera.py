@@ -13,7 +13,7 @@ human_cascade = cv2.CascadeClassifier(path)
 class Camera:
     amountofcameras = 0
 
-    def __init__(self, camera_adress, path_sound_file, motion_detection_cooldown,motion_detection_threshold,camera_alarms, camera_name, dev):
+    def __init__(self, camera_adress, path_sound_file, motion_detection_cooldown,motion_detection_threshold,camera_alarms, camera_name, dev, deviceturnoff=[]):
         self.gray = None
         self.ret = None
         self.relais_active_duration = 5
@@ -36,7 +36,7 @@ class Camera:
         self.motion_detected = False
         self.motion_detection_threshold = int(motion_detection_threshold)
         self.motion_last_time = 0
-
+        self.deviceturnoff = deviceturnoff
         self.cap = cv2.VideoCapture(camera_adress)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
@@ -75,8 +75,10 @@ class Camera:
         requests.get(f"http://192.168.1.4/30000/0{idrelais}")
         print(f"Camera {self.id} activated relais")
 
-    def deactivateRelais(self):
-        requests.get(f"http://192.168.1.4/30000/44")
+    def deactivateRelais(self,idrelais):
+        isroug = int(idrelais) - 1
+        print(isroug)
+        requests.get(f"http://192.168.1.4/30000/0{isroug}")
         print(f"Camera {self.id} deactivated relais")
 
     def resetFrame(self):
@@ -122,6 +124,8 @@ class Camera:
                             if did == devices["id"]:
                                 self.relais_active = True
                                 self.activateRelais(devices["ip"])
+                                self.deviceturnoff.append([devices, time.time()])
+
 
 
 
@@ -134,7 +138,9 @@ class Camera:
         # this will deactivate the relais after n amount of time
         if self.motion_previous_time + self.relais_active_duration <= time.time() and self.relais_active:
             self.relais_active = False
-            self.deactivateRelais()
+            for dev in self.deviceturnoff:
+                if (time.time()+int(dev[0]["delay"])) > dev[1]:
+                    self.deactivateRelais(dev[0]["ip"])
 
         self.motion_frame_counter += 1
         self.ret, self.frame = self.cap.read()
