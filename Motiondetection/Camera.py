@@ -1,10 +1,13 @@
+import datetime
+
 import cv2
 import time
 import threading
 import playsound
 import os
+from parser.fileParser import getProjFile
 
-path = os.path.dirname(os.getcwd()) + '/Files/haarcascade_upperbody.xml'
+path = getProjFile('Files/haarcascade_upperbody.xml')
 human_cascade = cv2.CascadeClassifier(path)
 
 
@@ -12,9 +15,10 @@ class Camera:
     amountofcameras = 0
 
     def __init__(self, camera_adress, path_sound_file, relais, relais_active_duration, motion_detection_cooldown,
-                 motion_detection_threshold):
+                 motion_detection_threshold, camera_name):
         self.gray = None
         self.ret = None
+        self.name = camera_name
         Camera.amountofcameras += 1
 
         self.frame = None
@@ -57,8 +61,16 @@ class Camera:
 
         return len(humans) > 0
 
-
-
+    def takePhoto(self):
+        timestamp = str(datetime.datetime.now()).split(":")
+        temp = timestamp
+        timestamp = ""
+        for i in temp:
+            timestamp += i + "-"
+        timestamp = timestamp[:-1]
+        p = getProjFile(f"images\\{timestamp}_{self.name}.png")
+        val = cv2.imwrite(p, self.frame)
+        print("took photo" + f" {val}")
 
     def activateRelais(self):
         print(f"Camera {self.id} activated relais")
@@ -100,10 +112,9 @@ class Camera:
 
         # this will trigger all actions when a new motion is detected
         if motion_detected and time.time() > self.motion_previous_time + self.motion_detection_cooldown:
-
-
             if self.checkHuman():
                 print("Human")
+                self.takePhoto()
                 threading.Thread(target=self.activateSound, daemon=True).start()
                 threading.Thread(target=self.activateRelais, daemon=True).start()
                 # threading.Thread(target=self.sendsms, daemon=True).start()

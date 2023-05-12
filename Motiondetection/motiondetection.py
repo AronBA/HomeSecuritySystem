@@ -2,24 +2,19 @@ import cv2
 import Camera
 import json
 import os
+from parser.fileParser import getProjFile
 
-path = os.path.dirname(os.getcwd()) + '/settings.json'
+path = getProjFile('settings.json')
 camerasettings = []
 camerasinstances = []
 f = open(path, "r")
 data = json.load(f)
 
 for cam in data["cameras"]:
-
-    camera = [cam["ip"]]
-
-    camerasettings.append(camera)
-
-
-
+    camerasettings.append(cam)
 
 for i in camerasettings:
-    camerasinstances.append(Camera.Camera(camera_adress=i[0],path_sound_file="",relais=1,relais_active_duration=5,motion_detection_cooldown=5,motion_detection_threshold=1000))
+    camerasinstances.append(Camera.Camera(camera_adress=i["ip"],path_sound_file="",relais=1,relais_active_duration=5,motion_detection_cooldown=5,motion_detection_threshold=1000, camera_name=i["name"]))
 
 
 def showcamerastream():
