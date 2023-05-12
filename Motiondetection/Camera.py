@@ -1,11 +1,16 @@
 import datetime
 import cv2
 import time
-import threading
 import playsound
 import requests
-
+import vonage
+import json
 import os
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+import ssl
+import smtplib
 
 path = os.path.dirname(os.getcwd()) + '/Files/haarcascade_upperbody.xml'
 human_cascade = cv2.CascadeClassifier(path)
@@ -28,6 +33,18 @@ class Camera:
         self.id = Camera.amountofcameras
         self.camera_adress = camera_adress
         self.path_sound_file = path_sound_file
+
+        self.data = json.load(open(os.path.dirname(os.getcwd()) + '/settings.json'))
+        client = vonage.Client(key=self.data["sms"]["smsSecret"], secret=self.data["sms"]["smsSecret"])
+        self.sms = vonage.Sms(client=client)
+        self.Srecipient = self.data["sms"]["smsNumber"]
+        self.Smsg = self.data["sms"]["smsText"]
+
+        self.password = self.data["Email"]["password"]
+        self.receiver = self.data["Email"]["receiver"]
+        self.sender = "modul0426@gmail.com"
+        self.msg = self.data["Email"]["content"]
+        self.subject = self.data["Email"]["subject"]
 
         self.relais_active = False
 
@@ -60,6 +77,75 @@ class Camera:
 
         return len(humans) > 0
 
+    def sendemail(self, imgPath: str = ""):
+        em = MIMEMultipart('alternative')
+        em['from'] = self.sender
+        em['To'] = self.receiver
+        em['Subject'] = self.subject
+
+        if imgPath != "":
+            with open(os.path.dirname(os.getcwd()) + "/" + imgPath, "rb") as IF:
+                try:
+                    f = IF.read()
+                    image = bytes(f)
+                except Exception:
+                    raise Exception
+
+            text = MIMEText(f"""<p>*******************************************</p>
+        <p>There was motion detected by {self.camera_name}</p>
+        <p>*******************************************</p>
+        <p>{self.msg}</p>
+        <img src="cid:attachedImg">
+        """, 'html')
+            em.attach(text)
+            img = MIMEImage(image)
+            img.add_header('Content-ID', 'attachedImg')
+            em.attach(img)
+        else:
+            text = MIMEText(f"""<p>*******************************************</p>
+                <p>There was motion detected by {self.camera_name}</p>
+                <p>*******************************************</p>
+                <p>{self.msg}</p>
+                """, 'html')
+            em.attach(text)
+
+        for cam in self.data["Cameras"]:
+            if cam["name"] == self.camera_name:
+                for alarms in cam["alarms"]:
+                    for alarm in self.data["alarms"]:
+                        if alarm["id"] == alarms:
+                            if alarm["email"]:
+                                context = ssl.create_default_context()
+
+                                with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                                    smtp.login(self.sender, self.password)
+                                    smtp.sendmail(self.sender, self.receiver, em.as_string())
+
+    def sendSMS(self):
+        params = {
+            "from": "C.A.S",
+            "to": self.Srecipient,
+            "text": f"""
+    ********************************
+    Motion detected by {self.camera_name}
+    ********************************
+    {self.Smsg}
+    """,
+        }
+        for cam in self.data["Cameras"]:
+            if cam["name"] == self.camera_name:
+                for alarms in cam["alarms"]:
+                    for alarm in self.data["alarms"]:
+                        if alarm["id"] == alarms:
+                            if alarm["sms"]:
+                                response = self.sms.send_message(params)
+
+                                if response["messages"][0]["status"] == "0":
+                                    print("Message Details: ", response)
+                                    print("Message sent successfully.")
+                                else:
+                                    print(f"Message failed with error: {response['messages'][0]['error-text']}")
+
     def takePhoto(self):
         timestamp = str(datetime.datetime.now()).split(":")
         temp = timestamp
@@ -67,9 +153,10 @@ class Camera:
         for i in temp:
             timestamp += i + "-"
         timestamp = timestamp[:-1]
-        p = os.path.dirname(os.getcwd()) + f"{timestamp}_{self.name}.png"
+        p = os.path.dirname(os.getcwd()) + f"{timestamp}_{self.camera_name}.png"
         val = cv2.imwrite(p, self.frame)
         print("took photo" + f" {val}")
+        return timestamp
 
     def activateRelais(self,idrelais):
         requests.get(f"http://192.168.1.4/30000/0{idrelais}")
@@ -116,24 +203,22 @@ class Camera:
         # this will trigger all actions when a new motion is detected
         if motion_detected and time.time() > self.motion_previous_time + self.motion_detection_cooldown:
 
-
             if self.checkHuman():
                 for alarm in self.camera_alarms:
                     for did in alarm["devices"]:
                         for devices in self.dev:
                             if did == devices["id"]:
                                 self.relais_active = True
+                                timestamp = self.takePhoto()
                                 self.activateRelais(devices["ip"])
+                                self.sendemail(f"{timestamp}_{self.camera_name}.png")
+                                self.sendSMS()
                                 self.deviceturnoff.append([devices, time.time()])
-
-
-
 
             else:
                 print("no human but motion")
             self.motion_previous_time = time.time()
             self.motion_detected = True
-
 
         # this will deactivate the relais after n amount of time
         if self.motion_previous_time + self.relais_active_duration <= time.time() and self.relais_active:
