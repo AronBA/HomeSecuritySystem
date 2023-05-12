@@ -20,14 +20,25 @@ app.get('/start', () => {
     pythonProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
     })
-
     pythonProcess.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
     })
-
     pythonProcess.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     })
+    file.id = pythonProcess.pid
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+
+})
+app.get('/stopp', () => {
+    process.kill(file.id)
+    file.id = ''
+    fs.writeFile(fileName, JSON.stringify(file), (err) => {
+        if (err) return console.log(err)
+    })
+    console.log('stopping software')
 })
 
 // Routes for pages

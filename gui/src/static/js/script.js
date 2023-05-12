@@ -1,3 +1,18 @@
+async function setStarted() {
+    const isStarted = await getData('id')
+    console.log(isStarted)
+    document.getElementById('start').checked = isStarted    
+}
+setStarted()
+
+function start(e) {
+    let location = '/start'
+    if(!e.target.checked) {
+        location = '/stopp'
+    }
+    window.location.href = location
+}
+
 async function getData(data) {
     return fetch(`/data?d=${data}`)
         .then(response => response.json())

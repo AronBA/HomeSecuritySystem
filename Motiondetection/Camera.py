@@ -42,6 +42,7 @@ class Camera:
         print(f"Camera ip{self.camera_adress}")
 
     def activateSound(self):
+        playsound("sus.mp3")
         print(f"Camera {self.id} played sound")
 
     def checkHuman(self):

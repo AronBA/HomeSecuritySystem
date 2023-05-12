@@ -37,6 +37,18 @@ header {
   width: var(--headerWidth);
   background-color: var(--light);
   padding: 5% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header .wrapStart {
+  position: relative;
+  width: 100% !important;
+  height: 30px;
+}
+header input {
+  height: 100%;
+  width: 100% !important;
 }
 
 header nav {
