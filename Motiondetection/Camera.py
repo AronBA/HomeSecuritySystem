@@ -1,9 +1,9 @@
 import datetime
-
 import cv2
 import time
 import threading
 import playsound
+import requests
 import os
 from parser.fileParser import getProjFile
 
@@ -14,13 +14,14 @@ human_cascade = cv2.CascadeClassifier(path)
 class Camera:
     amountofcameras = 0
 
-    def __init__(self, camera_adress, path_sound_file, relais, relais_active_duration, motion_detection_cooldown,
-                 motion_detection_threshold, camera_name):
+    def __init__(self, camera_adress, path_sound_file, motion_detection_cooldown,motion_detection_threshold,camera_alarms, camera_name, dev):
         self.gray = None
         self.ret = None
-        self.name = camera_name
+        self.relais_active_duration = 5
+        self.camera_alarms = camera_alarms
+        self.dev = dev
         Camera.amountofcameras += 1
-
+        self.camera_name = camera_name
         self.frame = None
         self.first_frame = 0
         self.motion_frame_counter = 0
@@ -28,14 +29,14 @@ class Camera:
         self.id = Camera.amountofcameras
         self.camera_adress = camera_adress
         self.path_sound_file = path_sound_file
-        self.relais = relais
+
         self.relais_active = False
-        self.relais_active_duration = relais_active_duration
+
 
         self.motion_previous_time = 0
-        self.motion_detection_cooldown = motion_detection_cooldown
+        self.motion_detection_cooldown = int(motion_detection_cooldown)
         self.motion_detected = False
-        self.motion_detection_threshold = motion_detection_threshold
+        self.motion_detection_threshold = int(motion_detection_threshold)
         self.motion_last_time = 0
 
         self.cap = cv2.VideoCapture(camera_adress)
@@ -72,10 +73,12 @@ class Camera:
         val = cv2.imwrite(p, self.frame)
         print("took photo" + f" {val}")
 
-    def activateRelais(self):
+    def activateRelais(self,idrelais):
+        requests.get(f"http://192.168.1.4/30000/0{idrelais}")
         print(f"Camera {self.id} activated relais")
 
     def deactivateRelais(self):
+        requests.get(f"http://192.168.1.4/30000/44")
         print(f"Camera {self.id} deactivated relais")
 
     def resetFrame(self):
@@ -112,13 +115,18 @@ class Camera:
 
         # this will trigger all actions when a new motion is detected
         if motion_detected and time.time() > self.motion_previous_time + self.motion_detection_cooldown:
+
+
             if self.checkHuman():
-                print("Human")
-                self.takePhoto()
-                threading.Thread(target=self.activateSound, daemon=True).start()
-                threading.Thread(target=self.activateRelais, daemon=True).start()
-                # threading.Thread(target=self.sendsms, daemon=True).start()
-                # threading.Thread(target=self.sendemail, daemon=True).start()
+                for alarm in self.camera_alarms:
+                    for did in alarm["devices"]:
+                        for devices in self.dev:
+                            if did == devices["id"]:
+                                self.relais_active = True
+                                self.activateRelais(devices["relais"])
+
+
+
             else:
                 print("no human but motion")
             self.motion_previous_time = time.time()

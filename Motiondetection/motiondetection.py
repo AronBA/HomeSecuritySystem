@@ -11,11 +11,29 @@ f = open(path, "r")
 data = json.load(f)
 
 for cam in data["cameras"]:
-    camerasettings.append(cam)
+
+    alarms = []
+    alarmsid = cam["alarms"]
+    devices = []
+
+    for aid in alarmsid:
+        for alarm in data["alarms"]:
+            if aid == alarm["id"]:
+                alarms.append(alarm)
+
+
+
+
+    camera = [cam["ip"],cam["name"],alarms]
+
+
+    camerasettings.append(camera)
+
+
+
 
 for i in camerasettings:
-    camerasinstances.append(Camera.Camera(camera_adress=i["ip"],path_sound_file="",relais=1,relais_active_duration=5,motion_detection_cooldown=5,motion_detection_threshold=1000, camera_name=i["name"]))
-
+    camerasinstances.append(Camera.Camera(camera_adress=i[0],camera_name=i[1],camera_alarms=i[2],dev=data["devices"],motion_detection_threshold=data["settings"]["threshold"],motion_detection_cooldown=data["settings"]["delay"],path_sound_file=""))
 
 def showcamerastream():
     for camera in camerasinstances:
