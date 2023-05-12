@@ -2,8 +2,10 @@ import cv2
 import time
 import threading
 import playsound
+import os
 
-human_cascade = cv2.CascadeClassifier('Files/haarcascade_upperbody.xml')
+path = os.path.dirname(os.getcwd()) + '/Files/haarcascade_upperbody.xml'
+human_cascade = cv2.CascadeClassifier(path)
 
 
 class Camera:

@@ -1,11 +1,12 @@
 import cv2
 import Camera
 import json
-from parser.fileParser import getProjFile
+import os
+
+path = os.path.dirname(os.getcwd()) + '/settings.json'
 camerasettings = []
 camerasinstances = []
-path = getProjFile("settings.json")
-f = open(path,"r")
+f = open(path, "r")
 data = json.load(f)
 
 for cam in data["cameras"]:
