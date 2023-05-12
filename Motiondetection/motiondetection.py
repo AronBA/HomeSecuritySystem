@@ -2,7 +2,9 @@ import cv2
 import Camera
 import json
 
-camerasettings = [0, "rtsp://admin:admin@192.168.1.96:554","rtsp://admin:admin@192.168.1.92:554"]
+
+#rtsp://admin:admin@192.168.1.96:554","rtsp://admin:admin@192.168.1.92:554
+camerasettings = [0]
 camerasinstances = []
 
 for i in camerasettings:
