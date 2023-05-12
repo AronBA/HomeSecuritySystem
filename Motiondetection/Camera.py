@@ -37,6 +37,7 @@ class Camera:
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
         print(f"Created camera nr.{self.id}")
+        print(f"Camera ip{self.camera_adress}")
 
     def activateSound(self):
         print(f"Camera {self.id} played sound")

@@ -1,14 +1,24 @@
 import cv2
 import Camera
 import json
-
-
-#rtsp://admin:admin@192.168.1.96:554","rtsp://admin:admin@192.168.1.92:554
-camerasettings = [0]
+from parser.fileParser import getProjFile
+camerasettings = []
 camerasinstances = []
+path = getProjFile("settings.json")
+f = open(path,"r")
+data = json.load(f)
+
+for cam in data["cameras"]:
+
+    camera = [cam["ip"]]
+
+    camerasettings.append(camera)
+
+
+
 
 for i in camerasettings:
-    camerasinstances.append(Camera.Camera(camera_adress=i,path_sound_file="",relais=1,relais_active_duration=5,motion_detection_cooldown=5,motion_detection_threshold=1000))
+    camerasinstances.append(Camera.Camera(camera_adress=i[0],path_sound_file="",relais=1,relais_active_duration=5,motion_detection_cooldown=5,motion_detection_threshold=1000))
 
 
 def showcamerastream():
