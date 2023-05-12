@@ -8,10 +8,7 @@ import Messengers.SMS_Message
 import Messengers.Email_Message
 import Relais
 
-human_cascade = cv2.CascadeClassifier('Files/haarcascade_upperbody.xml')
-
-human_cascade = cv2.CascadeClassifier('Files/haarcascade_upperbody.xml')
-
+human_cascade = cv2.CascadeClassifier('../Files/haarcascade_upperbody.xml')
 
 class Camera:
     amountofcameras = 0
@@ -132,8 +129,7 @@ class Camera:
                 # threading.Thread(target=self.sendsms, daemon=True).start()
                 # threading.Thread(target=self.sendemail, daemon=True).start()
             else:
-                print("no human but motion")            threading.Thread(target=self.sendsms, daemon=True).start()
-            threading.Thread(target=self.sendemail, daemon=True).start()
+                print("no human but motion")
 
             self.motion_previous_time = time.time()
             self.motion_detected = True
