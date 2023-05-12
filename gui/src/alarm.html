@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alarm</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./static/style/index.css">
+  <script src='./static/js/script.js' defer></script>
+</head>
+
+<body onload="setAlarms()">
+  <header>
+    <div class="form-check form-switch wrapStart">
+      <input class="form-check-input" type="checkbox" id="start" onclick="start(event)">
+    </div>
+    <nav>
+      <a href="/" title="Settings">
+        <i class="bi bi-gear"></i>
+      </a>
+      <a href="/cameras" title="Cameras">
+        <i class="bi bi-camera-video"></i>
+      </a>
+      <a href="/email" title="Email">
+        <i class="bi bi-envelope-at"></i>
+      </a>
+      <a href="/sms" title="SMS">
+        <i class="bi bi-chat-left-dots"></i>
+      </a>
+      <a class="current" title="Alarms">
+        <i class="bi bi-alarm"></i>
+      </a>
+      <a href="/device" title="Devices">
+        <i class="bi bi-megaphone"></i>
+      </a>
+    </nav>
+  </header>
+  <main>
+    <h1>Alarms</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col"><a href="/email">Email</a></th>
+          <th scope="col"><a href="/sms">SMS</a></th>
+          <th scope="col"><a href="/device">Devices</a></th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+    <div class="wrapSubmit">
+      <a href="/addAlarm"><button class="btn btn-primary">Add Alarm</button></a>
+    </div>
+  </main>
+
+</body>
+
+</html>

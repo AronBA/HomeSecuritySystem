@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/style/index.css">
+    <script src='./static/js/sms.js' defer></script>
+    <script src='./static/js/script.js' defer></script>
+</head>
+
+<body>
+    <header>
+        <div class="form-check form-switch wrapStart">
+            <input class="form-check-input" type="checkbox" id="start" onclick="start(event)">
+        </div>
+        <nav>
+            <a href="/" title="Settings">
+                <i class="bi bi-gear"></i>
+            </a>
+            <a href="/cameras" title="Camera">
+                <i class="bi bi-camera-video"></i>
+            </a>
+            <a href="/email" title="Email">
+                <i class="bi bi-envelope-at"></i>
+            </a>
+            <a class="current" title="SMS">
+                <i class="bi bi-chat-left-dots"></i>
+            </a>
+            <a href="/alarm" title="Alarms">
+                <i class="bi bi-alarm"></i>
+            </a>
+            <a href="/device" title="Devices">
+                <i class="bi bi-megaphone"></i>
+            </a>
+        </nav>
+    </header>
+    <main>
+        <h1>SMS</h1>
+        <form method="get" action="/saveSms">
+            <div>
+                <label class="form-label">Send SMS</label>
+                <input name="state" id="smsState" type="checkbox" placeholder="Send SMS">
+            </div>
+            <div>
+                <label class="form-label">SMS Secret</label>
+                <input name="secret" type="password" class="form-control smsInput" placeholder="SMS Secret">
+            </div>
+            <div>
+                <label class="form-label">SMS Key</label>
+                <input name="key" type="text" class="form-control smsInput" placeholder="SMS Key" />
+            </div>
+            <div>
+                <label class="form-label">Tel. Number</label>
+                <input name="number" type="text" class="form-control smsInput" placeholder="Tel. Number" />
+            </div>
+            <div>
+                <label class="form-label">SMS Text</label>
+                <textarea name="text" class="form-control smsInput" rows="5" placeholder="SMS Text"></textarea>
+            </div>
+            <div class="wrapSubmit">
+                <input type="submit" value="Save" class="btn btn-primary">
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
