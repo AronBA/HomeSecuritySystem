@@ -36,19 +36,22 @@ h2 {
 header {
   width: var(--headerWidth);
   background-color: var(--light);
-  padding: 5% 0;
+  padding: 3% 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
 }
 header .wrapStart {
   position: relative;
   width: 100% !important;
-  height: 30px;
+  height: 30px !important;
+  display: flex;
+  justify-content: center;
 }
 header input {
-  height: 100%;
-  width: 100% !important;
+  height: 100% !important;
+  width: 75% !important;
 }
 
 header nav {
